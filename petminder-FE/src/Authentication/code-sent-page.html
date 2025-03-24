@@ -43,7 +43,7 @@
         aria-label="Proceed to next step"
         onclick="redirectToVerifyEmail()"
       >
-        Proceed
+        <span class="button-text">Proceed</span>
       </button>
 
       <a href="login-page.html" class="back-link">Back to sign in</a>
@@ -51,10 +51,18 @@
 
     <script>
       function redirectToVerifyEmail() {
+        const button = document.querySelector(".proceed-button");
+        const buttonText = document.querySelector(".button-text");
+
+        // Show loading state
+        buttonText.textContent = "Redirecting...";
+        button.classList.add("loading");
+        button.disabled = true;
+
         // Add a small delay for button animation effect
         setTimeout(function () {
           window.location.href = "verify-email.html";
-        }, 200);
+        }, 800);
       }
     </script>
   </body>
