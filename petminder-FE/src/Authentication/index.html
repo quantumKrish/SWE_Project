@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>PetMinder - Homepage</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Rowdies&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@2.30.0/tabler-icons.min.css"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="landing-page.css" />
+  </head>
+  <body>
+    <main class="landing-container">
+      <header class="brand-container">
+        <img
+          src="https://cdn.builder.io/api/v1/image/assets/82d483615798456e8eba6eee5f39bef1/ca48325ce9badd3c8a8a395ed4e995ededa6d048?placeholderIfAbsent=true"
+          alt="Minder Logo"
+          class="logo-image"
+        />
+        <h1 class="brand-name">Minder</h1>
+      </header>
+      <div class="action-container">
+        <button
+          class="action-button"
+          aria-label="Get Started"
+          id="login-button"
+        >
+          <i class="ti ti-arrow-right arrow-icon"></i>
+        </button>
+      </div>
+    </main>
+    <script>
+      document
+        .getElementById("login-button")
+        .addEventListener("click", function () {
+          // Add fade-out effect to the entire page
+          document.body.classList.add("fade-out");
+
+          // Redirect after the transition completes
+          setTimeout(function () {
+            window.location.href = "login-page.html";
+          }, 500); // Match this with the CSS transition duration
+        });
+    </script>
+  </body>
+</html>
