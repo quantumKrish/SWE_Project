@@ -7,6 +7,7 @@ function Profile() {
   return (
     <div>
       <h2>Profile</h2>
+      <p><strong>ID:</strong> {user.id}</p>
       <p><strong>Name:</strong> {user.name || 'Guest'}</p>
       <p><strong>Role:</strong> {user.role}</p>
       {/* 
