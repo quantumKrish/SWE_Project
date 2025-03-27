@@ -13,7 +13,7 @@ CREATE TABLE IF NOT EXISTS `users` (
     `address` TEXT,
     `verified` BOOLEAN DEFAULT FALSE,
     `language` VARCHAR(50),
-    `role` ENUM('owner', 'minder', 'admin', user) NOT NULL,
+    `role` ENUM('owner', 'minder', 'admin', 'user') NOT NULL,
     `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     `updated_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 );
