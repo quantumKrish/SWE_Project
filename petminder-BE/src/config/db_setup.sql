@@ -93,5 +93,5 @@ CREATE TABLE IF NOT EXISTS `reviews` (
     `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (`reviewerID`) REFERENCES `users`(`id`) ON DELETE CASCADE,
     FOREIGN KEY (`reviewedUserID`) REFERENCES `users`(`id`) ON DELETE CASCADE,
-    FOREIGN KEY (`bookingID`) REFERENCES `booking`(`id`) ON DELETE CASCADE
+    FOREIGN KEY (`bookingID`) REFERENCES `booking`(`bookingid`) ON DELETE CASCADE
 );
