@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import Navbar from '../components/Navbar';
 
 function Tracking() {
   const [trackingActive, setTrackingActive] = useState(false);
@@ -31,6 +32,7 @@ function Tracking() {
 
   return (
     <div>
+      <Navbar />
       <h2>Live Tracking</h2>
       {!trackingActive ? (
         <button onClick={handleStartTracking}>Start Walk</button>

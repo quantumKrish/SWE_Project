@@ -1,0 +1,315 @@
+/* Base styles */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  transition:
+    background-color 0.3s ease,
+    color 0.3s ease,
+    transform 0.3s ease,
+    box-shadow 0.3s ease;
+}
+
+body {
+  font-family:
+    "Rowdies",
+    -apple-system,
+    Roboto,
+    Helvetica,
+    sans-serif;
+  font-weight: 300;
+  background-color: #f5f5f5;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100vh;
+  animation: fadeIn 0.5s ease-in-out;
+}
+
+/* Page transitions */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes bounce {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.05);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+/* Add smooth scrolling */
+html {
+  scroll-behavior: smooth;
+  height: 100%;
+  width: 100%;
+}
+
+/* Main container */
+.confirmation-page {
+  background-color: #ffffff;
+  display: flex;
+  margin-left: auto;
+  margin-right: auto;
+  max-width: 480px;
+  width: 100%;
+  min-height: 100vh;
+  padding: 30px 31px;
+  flex-direction: column;
+  overflow: hidden;
+  align-items: center;
+  text-align: center;
+  box-sizing: border-box;
+  animation: slideUp 0.5s ease-out forwards;
+}
+
+@keyframes slideUp {
+  from {
+    transform: translateY(20px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+/* Page heading */
+.page-heading {
+  color: #000000;
+  font-size: 22px;
+  font-weight: 400;
+  letter-spacing: 0.44px;
+  animation: fadeIn 0.6s ease-in-out forwards;
+}
+
+/* Email icon container */
+.email-icon-container {
+  margin-top: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  animation:
+    fadeIn 0.8s ease-in-out forwards,
+    bounce 2s ease-in-out 1s;
+}
+
+.email-icon {
+  transition: transform 0.3s ease;
+}
+
+.email-icon:hover {
+  transform: scale(1.05);
+}
+
+/* Confirmation title */
+.confirmation-title {
+  color: #000000;
+  font-size: 22px;
+  font-weight: 400;
+  letter-spacing: 0.44px;
+  margin-top: 33px;
+  animation: fadeIn 1s ease-in-out forwards;
+}
+
+/* Confirmation message */
+.confirmation-message {
+  color: #000000;
+  font-size: 22px;
+  font-weight: 400;
+  letter-spacing: 0.44px;
+  margin-top: 20px;
+  animation: fadeIn 1.2s ease-in-out forwards;
+}
+
+/* Proceed button */
+.proceed-button {
+  border-radius: 100px;
+  background: linear-gradient(90deg, rgba(238, 118, 131, 0) 0%, #ee7683 100%),
+    linear-gradient(90deg, rgba(236, 173, 63, 0) 0%, #ecad3f 100%), #ed6b30;
+  width: 340px;
+  margin-top: 65px;
+  padding: 19px 70px;
+  font-size: 18px;
+  color: #ffffff;
+  white-space: nowrap;
+  letter-spacing: 0.36px;
+  border: none;
+  font-family:
+    "Rowdies",
+    -apple-system,
+    Roboto,
+    Helvetica,
+    sans-serif;
+  font-weight: 300;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+  animation: fadeIn 1.4s ease-in-out forwards;
+}
+
+.proceed-button:before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: rgba(255, 255, 255, 0.2);
+  transition: all 0.6s ease;
+  z-index: 1;
+}
+
+.proceed-button:hover:before {
+  left: 100%;
+}
+
+.proceed-button:hover {
+  background-color: #d55b25;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(237, 107, 48, 0.3);
+}
+
+.proceed-button:active {
+  transform: translateY(1px);
+  box-shadow: 0 2px 6px rgba(237, 107, 48, 0.2);
+}
+
+.proceed-button:focus {
+  outline: 3px solid rgba(237, 107, 48, 0.5);
+  outline-offset: 2px;
+}
+
+.proceed-button.loading {
+  background-color: #d55b25;
+  animation: pulse 1.5s infinite;
+}
+
+/* Back link */
+.back-link {
+  margin-top: 40px;
+  font-size: 20px;
+  color: #bbbbbb;
+  letter-spacing: 0.4px;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  position: relative;
+  display: inline-block;
+  padding: 5px 10px;
+  border-radius: 4px;
+  animation: fadeIn 1.6s ease-in-out forwards;
+}
+
+.back-link:after {
+  content: "";
+  position: absolute;
+  width: 0;
+  height: 2px;
+  bottom: -2px;
+  left: 0;
+  background-color: #ed6b30;
+  transition: width 0.3s ease;
+}
+
+.back-link:hover,
+.back-link:focus {
+  color: #ed6b30;
+  transform: translateY(-2px);
+}
+
+.back-link:hover:after,
+.back-link:focus:after {
+  width: 100%;
+}
+
+.back-link:active {
+  transform: translateY(1px);
+}
+
+/* Accessibility */
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* Focus styles for keyboard navigation */
+a:focus,
+button:focus,
+input:focus {
+  outline: 3px solid rgba(237, 107, 48, 0.5);
+  outline-offset: 2px;
+}
+
+/* Media queries for responsiveness */
+@media (max-width: 991px) {
+  .confirmation-page {
+    padding: 25px 20px;
+  }
+
+  .proceed-button {
+    width: 300px;
+  }
+}
+
+@media (max-width: 640px) {
+  .confirmation-page {
+    padding: 20px 15px;
+  }
+
+  .page-heading {
+    font-size: 18px;
+  }
+
+  .email-icon {
+    width: 140px;
+    height: 140px;
+  }
+
+  .confirmation-title,
+  .confirmation-message {
+    font-size: 20px;
+  }
+
+  .proceed-button {
+    width: 280px;
+    padding: 15px 50px;
+    margin-top: 50px;
+  }
+
+  .back-link {
+    margin-top: 30px;
+    font-size: 18px;
+  }
+}
