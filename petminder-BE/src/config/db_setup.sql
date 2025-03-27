@@ -8,7 +8,7 @@ CREATE TABLE IF NOT EXISTS `users` (
     `username` VARCHAR(255) NOT NULL,
     `name` VARCHAR(255),
     `phoneNumber` VARCHAR(15),
-    `email` VARCHAR(255); NOT NULL,
+    `email` VARCHAR(255) NOT NULL,
     `password` VARCHAR(255) NOT NULL,
     `address` TEXT,
     `verified` BOOLEAN DEFAULT FALSE,
@@ -27,7 +27,7 @@ CREATE TABLE IF NOT EXISTS `petMinder` (
     `ratings` FLOAT DEFAULT 0,
     `latitude` DECIMAL(9,6),
     `longitude` DECIMAL(9,6),
-    `locationUpdatedAt` TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP;
+    `locationUpdatedAt` TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     FOREIGN KEY (`id`) REFERENCES `users`(`id`) ON DELETE CASCADE
 );
 
