@@ -1,9 +1,9 @@
 const express = require('express');
+const authController = require('../controllers/authController');
 const router = express.Router();
 
-// Placeholder route
-router.get('/', (req, res) => {
-  res.send('Auth route works!');
-});
+router.post('/register', authController.register);
+router.post('/login', authController.login);
+router.post('/reset-password', authController.resetPassword);
 
 module.exports = router;
