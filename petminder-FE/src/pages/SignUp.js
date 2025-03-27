@@ -9,11 +9,14 @@ function SignUp() {
   const [password, setPassword] = useState("");
   const [checkPassword, setCheckPassword] = useState("");
   const [role, setRole] = useState("user");
+  const [showRolePopup, setShowRolePopup] = useState(false);
+  const [selectedRole, setSelectedRole] = useState("");
+  const [showUsernamePopup, setShowUsernamePopup] = useState(false);
 
   const navigate = useNavigate();
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
+  const handleSubmit = async () => {
+    
 
     if (password !== checkPassword) {
       alert("Passwords do not match!");
@@ -51,6 +54,21 @@ function SignUp() {
     }
   };
 
+  const handleRegisterClick = (e) => {
+    e.preventDefault();
+    setShowRolePopup(true);
+  };
+
+  const handleConfirmRole = () => {
+    if (!selectedRole) {
+      alert("Please select a role before confirming.");
+      return;
+    }
+    setRole(selectedRole);
+    setShowRolePopup(false);
+    setShowUsernamePopup(true);
+  };
+
   return (
     <main class="register-page">
       <img
@@ -62,7 +80,7 @@ function SignUp() {
       <h1 class="welcome-heading">Welcome to Minder!</h1>
       <p class="create-account-text">Create your account</p>
 
-      <form class="registration-form" onSubmit={handleSubmit}>
+      <form class="registration-form">
         <div class="input-container">
           <div class="input-wrapper">
             <input
@@ -111,13 +129,75 @@ function SignUp() {
           </div>
         </div>
 
-        <button type="submit" class="register-button">Register</button>
+        <button type="button" class="register-button" onClick={handleRegisterClick}>Register</button>
       </form>
 
       <div class="login-section">
         <p class="login-text">Already have an account?</p>
         <Link to="/login" class="login-link">Log in!</Link>
       </div>
+
+      {showRolePopup && (
+        <div className="role-popup">
+          <div className="popup-content">
+            <h2>Choose your role</h2>
+            <div className="role-options">
+              <label className="radio-container">
+                <input
+                  type="radio"
+                  name="userRole"
+                  value="owner"
+                  checked={selectedRole === "owner"}
+                  onChange={(e) => setSelectedRole(e.target.value)}
+                />
+                <span className="custom-radio"></span>
+                <span className="label-text">Pet Owner</span>
+              </label>
+
+              <label className="radio-container">
+                <input
+                  type="radio"
+                  name="userRole"
+                  value="minder"
+                  checked={selectedRole === "minder"}
+                  onChange={(e) => setSelectedRole(e.target.value)}
+                />
+                <span className="custom-radio"></span>
+                <span className="label-text">Pet Minder</span>
+              </label>
+            </div>
+
+            <button className="confirm-button" onClick={handleConfirmRole}>
+              Confirm
+            </button>
+          </div>
+        </div>
+      )}
+
+      {showUsernamePopup && (
+        <div className="role-popup">
+          <div className="popup-content">
+            <h2>Choose your username</h2>
+            <input
+              type="text"
+              placeholder="Username"
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
+              className="username-input"
+            />
+            <button
+              className="confirm-button"
+              onClick={function () {
+                setShowUsernamePopup(false);
+                handleSubmit();
+              }
+            }
+            >
+              Confirm
+            </button>
+          </div>
+        </div>
+      )}
     </main>
   );
 }
