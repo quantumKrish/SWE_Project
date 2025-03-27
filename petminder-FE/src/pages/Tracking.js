@@ -1,56 +1,26 @@
-import React, { useState, useEffect } from 'react';
+import React from "react";
+import { useSearchParams } from "react-router-dom";
+import MinderTracking from "./MinderTracking"; 
+import OwnerMap from "./OwnerMap"; 
 
-function Tracking() {
-  const [trackingActive, setTrackingActive] = useState(false);
-  const [location, setLocation] = useState({ lat: 0, lng: 0 });
-
-  // Placeholder for simulating position updates
-  useEffect(() => {
-    let intervalId;
-    if (trackingActive) {
-      intervalId = setInterval(() => {
-        // TODO: Replace this with real-time location updates from an API or WebSocket
-        setLocation((loc) => ({
-          lat: loc.lat + Math.random() * 0.001,
-          lng: loc.lng + Math.random() * 0.001,
-        }));
-      }, 3000); // every 3 seconds
-    }
-    return () => clearInterval(intervalId);
-  }, [trackingActive]);
-
-  const handleStartTracking = () => {
-    // TODO: Start tracking logic (perhaps notify backend)
-    setTrackingActive(true);
-  };
-
-  const handleStopTracking = () => {
-    // TODO: Stop tracking logic (perhaps notify backend)
-    setTrackingActive(false);
-  };
+const Tracking = () => {
+  // Get URL parameters to determine the user's role (minder or owner)
+  const [searchParams] = useSearchParams();
+  const userRole = searchParams.get("role") || "minder"; // Default to 'minder' if no role is specified
+  const userId = searchParams.get("id") || "testUser123"; // Temporary fallback
 
   return (
     <div>
-      <h2>Live Tracking</h2>
-      {!trackingActive ? (
-        <button onClick={handleStartTracking}>Start Walk</button>
+      <h2>Live Tracking - {userRole.toUpperCase()}</h2>
+      
+      {/* Render the appropriate component based on user role */}
+      {userRole === "minder" ? (
+        <MinderTracking key="minder" userId={userId} />
       ) : (
-        <button onClick={handleStopTracking}>Stop Walk</button>
+        <OwnerMap key="owner" minderId={userId} />
       )}
-
-      <div style={{ marginTop: '1rem' }}>
-        <p><strong>Current Location:</strong></p>
-        <p>Latitude: {location.lat.toFixed(5)}</p>
-        <p>Longitude: {location.lng.toFixed(5)}</p>
-
-        {/* Placeholder for a map component */}
-        {/* Here you could integrate a map library (e.g., Leaflet, Google Maps) to display location */}
-        <div style={{ width: '300px', height: '200px', background: '#ccc', marginTop: '1rem' }}>
-          <p style={{ textAlign: 'center', paddingTop: '80px' }}>Map Placeholder</p>
-        </div>
-      </div>
     </div>
   );
-}
+};
 
 export default Tracking;
