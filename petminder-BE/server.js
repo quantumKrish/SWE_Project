@@ -1,7 +1,7 @@
 /*
 const express = require('express');
 const userRoutes = require('./routes/userRoutes');
-// const authRoutes = require('./routes/authRoutes'); // Uncomment when ready
+// const authRoutes = require('./routes/authRoutes');
 // const locationRoutes = require('./routes/locationRoutes');
 // const messageRoutes = require('./routes/messageRoutes');
 // const bookingRoutes = require('./routes/bookingRoutes');

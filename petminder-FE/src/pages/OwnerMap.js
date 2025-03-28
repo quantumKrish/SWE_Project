@@ -30,6 +30,7 @@ const ChangeMapView = ({ coords }) => {
 const OwnerMap = ({ minderId }) => {
   const [socket, setSocket] = useState(null); // WebSocket connection state
   const [location, setLocation] = useState({ latitude: null, longitude: null }); // State to track minder's location
+  const [checklist, setChecklist] = useState([]);
 
   useEffect(() => {
     // Establish a WebSocket connection with the server
