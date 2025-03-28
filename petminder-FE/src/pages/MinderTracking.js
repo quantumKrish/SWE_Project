@@ -3,16 +3,10 @@ import React, { useEffect, useState } from "react";
 const MinderTracking = ({ userId }) => {
   const [socket, setSocket] = useState(null);
   const [location, setLocation] = useState({ latitude: null, longitude: null });
-  const [retryCount, setRetryCount] = useState(0); // Track retry attempts
-  const [tasks, setTasks] = useState([
-    { id: 1, text: "Pick up the pet", completed: false },
-    { id: 2, text: "Walk the pet", completed: false },
-    { id: 3, text: "Give water", completed: false },
-    { id: 4, text: "Return pet home", completed: false },
-  ]);
+  const [sessionActive, setSessionActive] = useState(false); // Track session state
 
   useEffect(() => {
-    const ws = new WebSocket("ws://localhost:3001");
+    const ws = new WebSocket("ws://localhost:4000");
     setSocket(ws);
 
     ws.onopen = () => {
@@ -21,47 +15,29 @@ const MinderTracking = ({ userId }) => {
     };
 
     ws.onmessage = (event) => {
-      const data = JSON.parse(event.data);
-      console.log("📩 Minder received:", data);
+      console.log("📩 Minder received:", JSON.parse(event.data));
     };
 
     return () => ws.close();
   }, [userId]);
 
   useEffect(() => {
-    if (!socket) return;
+    if (!socket || !sessionActive) return;
 
     let watchId;
-    let retries = 0;
-    
-    const handleSuccess = (position) => {
-      const { latitude, longitude, accuracy } = position.coords;
 
-      console.log("✅ Location Data:", {
+    const handleSuccess = (position) => {
+      const { latitude, longitude } = position.coords;
+      setLocation({ latitude, longitude });
+
+      socket.send(JSON.stringify({
+        type: "location",
+        userId,
         latitude,
         longitude,
-        accuracy,
-        source: accuracy < 100 ? "GPS" : "Possibly IP-based",
-      });
+      }));
 
-      // Accept GPS data if accuracy is good OR retry limit reached
-      if (accuracy < 100 || retries >= 5) {
-        setLocation({ latitude, longitude });
-
-        socket.send(JSON.stringify({
-          type: "location",
-          userId,
-          latitude,
-          longitude,
-        }));
-
-        console.log("📡 Sent updated location:", latitude, longitude);
-        return; // Stop retrying if we got a good fix
-      }
-
-      // Retry up to 5 times if accuracy is bad
-      retries++;
-      console.warn(`⚠️ Low accuracy (${accuracy}m), retrying (${retries}/5)...`);
+      console.log("📡 Sent updated location:", latitude, longitude);
     };
 
     const handleError = (error) => {
@@ -81,45 +57,23 @@ const MinderTracking = ({ userId }) => {
     return () => {
       if (watchId) navigator.geolocation.clearWatch(watchId);
     };
-  }, [socket, userId]);
-
-  const toggleTask = (id) => {
-    const updatedTasks = tasks.map(task =>
-      task.id === id ? { ...task, completed: !task.completed } : task
-    );
-    setTasks(updatedTasks);
-
-    if (socket) {
-      socket.send(JSON.stringify({
-        type: "checklistUpdate",
-        userId,
-        tasks: updatedTasks,
-      }));
-    }
-  };
+  }, [socket, userId, sessionActive]);
 
   return (
     <div>
-      <h2>Tracking Minder Location</h2>
-      {location.latitude && location.longitude ? (
-        <p>📍 Latitude: {location.latitude}, Longitude: {location.longitude}</p>
+      <h2>Minder Tracking</h2>
+      {!sessionActive ? (
+        <button onClick={() => setSessionActive(true)}>Start Session</button>
       ) : (
-        <p>Waiting for location data...</p>
+        <>
+          <p>Session Active ✅</p>
+          {location.latitude && location.longitude ? (
+            <p>📍 Latitude: {location.latitude}, Longitude: {location.longitude}</p>
+          ) : (
+            <p>Waiting for location data...</p>
+          )}
+        </>
       )}
-      
-      <h3>Checklist</h3>
-      <ul>
-        {tasks.map(task => (
-          <li key={task.id}>
-            <input
-              type="checkbox"
-              checked={task.completed}
-              onChange={() => toggleTask(task.id)}
-            />
-            {task.text}
-          </li>
-        ))}
-      </ul>
     </div>
   );
 };
