@@ -1,0 +1,132 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Verify Email - PetMinder</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Rowdies:wght@300;400&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="verify-email.css" />
+  </head>
+  <body>
+    <main class="verification-page">
+      <h1 class="page-heading">Verify Your Email</h1>
+
+      <div class="email-icon-container">
+        <svg
+          class="email-icon"
+          width="165"
+          height="165"
+          viewBox="0 0 165 165"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+          aria-hidden="true"
+        >
+          <circle cx="82.5" cy="82.5" r="82.5" fill="#E3F2FD"></circle>
+          <rect
+            x="37"
+            y="52"
+            width="91"
+            height="61"
+            rx="8"
+            fill="#2196F3"
+          ></rect>
+          <path
+            d="M37 60L80.0718 89.1056C81.8966 90.2952 84.1034 90.2952 85.9282 89.1056L129 60"
+            stroke="white"
+            stroke-width="8"
+            stroke-linecap="round"
+          ></path>
+        </svg>
+      </div>
+
+      <h2 class="verification-title">Enter the code</h2>
+
+      <div class="code-input-container">
+        <input
+          type="text"
+          id="verification-code"
+          class="code-input"
+          placeholder="Enter the code"
+          aria-label="Verification code input field"
+        />
+      </div>
+
+      <div class="buttons-container">
+        <button
+          type="button"
+          class="resend-button"
+          aria-label="Resend verification code"
+          onclick="resendCode()"
+        >
+          <span class="button-text">Resend Code</span>
+        </button>
+
+        <button
+          type="button"
+          class="verify-button"
+          aria-label="Verify email with entered code"
+          onclick="verifyCode()"
+        >
+          <span class="button-text">Verify</span>
+        </button>
+      </div>
+
+      <a href="login-page.html" class="back-link">Back to sign in</a>
+    </main>
+
+    <script>
+      function resendCode() {
+        const button = document.querySelector(".resend-button");
+        const buttonText = button.querySelector(".button-text");
+
+        // Show loading state
+        buttonText.textContent = "Sending...";
+        button.classList.add("loading");
+        button.disabled = true;
+
+        // Simulate API call with timeout
+        setTimeout(function() {
+          buttonText.textContent = "Code Sent!";
+
+          // Reset after 2 seconds
+          setTimeout(function() {
+            buttonText.textContent = "Resend Code";
+            button.classList.remove("loading");
+            button.disabled = false;
+          }, 2000);
+        }, 1000);
+      }
+
+      function verifyCode() {
+        const codeInput = document.getElementById("verification-code");
+        const button = document.querySelector(".verify-button");
+        const buttonText = button.querySelector(".button-text");
+
+        if (!codeInput.value.trim()) {
+          codeInput.classList.add("error");
+          codeInput.focus();
+          return;
+        }
+
+        // Show loading state
+        buttonText.textContent = "Verifying...";
+        button.classList.add("loading");
+        button.disabled = true;
+
+        // Simulate API call with timeout
+        setTimeout(function() {
+          // Redirect to next page or show success
+          window.location.href = "set-new-password.html";
+        }, 1500);
+      }
+
+      // Remove error class when user starts typing
+      document.getElementById("verification-code").addEventListener("input", function() {
+        this.classList.remove("error");
+      });
+    </script>
+  </body>
+</html>

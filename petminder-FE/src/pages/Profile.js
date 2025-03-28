@@ -1,14 +1,16 @@
 import React, { useContext } from 'react';
 import { UserContext } from './UserContext';
+import Navbar from '../components/Navbar';
 
 function Profile() {
   const { user } = useContext(UserContext);
 
   return (
     <div>
+      <Navbar />
       <h2>Profile</h2>
       <p><strong>ID:</strong> {user.id}</p>
-      <p><strong>Name:</strong> {user.name || 'Guest'}</p>
+      <p><strong>Name:</strong> {user.username || 'Guest'}</p>
       <p><strong>Role:</strong> {user.role}</p>
       {/* 
         If role is "minder", display pet minders info (services, rates, etc.)

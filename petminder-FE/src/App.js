@@ -9,6 +9,13 @@ import Tracking from './pages/Tracking';
 import Profile from './pages/Profile';
 import LogIn from './pages/LogIn';
 import SignUp from './pages/SignUp';
+import LandingPage from './pages/LandingPage';
+import ForgotPassword from './pages/ForgotPassword';
+import CodeSent from './pages/CodeSent';
+import VerifyEmail from './pages/VerifyEmail';
+import SetNewPassword from './pages/SetNewPassword';
+import PasswordSuccess from './pages/PasswordSuccess';
+
 
 import { UserProvider } from './pages/UserContext';
 
@@ -16,15 +23,20 @@ function App() {
   return (
     <UserProvider>
       <Router>
-        <Navbar />
         <Routes>
-          <Route path="/" element={<Home />} />
+          <Route path="/" element={<LandingPage />} />
+          <Route path="/home" element={<Home />} />
           <Route path="/search" element={<SearchPetMinders />} />
           <Route path="/book" element={<BookPetMinder />} />
           <Route path="/tracking" element={<Tracking />} />
           <Route path="/profile" element={<Profile />} />
           <Route path="/login" element={<LogIn />} />
           <Route path="/signup" element={<SignUp />} />
+          <Route path="/forgot-password" element={<ForgotPassword />} />
+          <Route path="/code-sent" element={<CodeSent />} />
+          <Route path="/verify-email" element={<VerifyEmail />} />
+          <Route path="/set-new-password" element={<SetNewPassword />} />
+          <Route path="/password-success" element={<PasswordSuccess />} />
         </Routes>
       </Router>
     </UserProvider>

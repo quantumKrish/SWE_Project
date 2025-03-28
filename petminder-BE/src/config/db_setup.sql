@@ -4,14 +4,16 @@ USE petminder;
 
 -- Users table
 CREATE TABLE IF NOT EXISTS `users` (
-    `userID` INT AUTO_INCREMENT PRIMARY KEY,
-    `name` VARCHAR(255) NOT NULL,
-    `phoneNumber` VARCHAR(15) NOT NULL,
+    `id` INT AUTO_INCREMENT PRIMARY KEY,
+    `username` VARCHAR(255) NOT NULL,
+    `name` VARCHAR(255),
+    `phoneNumber` VARCHAR(15),
+    `email` VARCHAR(255) NOT NULL,
     `password` VARCHAR(255) NOT NULL,
     `address` TEXT,
     `verified` BOOLEAN DEFAULT FALSE,
     `language` VARCHAR(50),
-    `role` ENUM('owner', 'minder', 'admin') NOT NULL,
+    `role` ENUM('owner', 'minder', 'admin', 'user') NOT NULL,
     `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     `updated_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 );
@@ -19,28 +21,31 @@ CREATE TABLE IF NOT EXISTS `users` (
 -- Pet Minder table
 CREATE TABLE IF NOT EXISTS `petMinder` (
     `minderID` INT AUTO_INCREMENT PRIMARY KEY,
-    `userID` INT NOT NULL,
+    `id` INT NOT NULL,
     `description` TEXT,
     `availability` TEXT,
     `ratings` FLOAT DEFAULT 0,
-    FOREIGN KEY (`userID`) REFERENCES `users`(`userID`) ON DELETE CASCADE
+    `latitude` DECIMAL(9,6),
+    `longitude` DECIMAL(9,6),
+    `locationUpdatedAt` TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    FOREIGN KEY (`id`) REFERENCES `users`(`id`) ON DELETE CASCADE
 );
 
 -- Pet Owner table
 CREATE TABLE IF NOT EXISTS `petOwner` (
     `ownerID` INT AUTO_INCREMENT PRIMARY KEY,
-    `userID` INT NOT NULL,
+    `id` INT NOT NULL,
     `ratings` FLOAT DEFAULT 0,
-    FOREIGN KEY (`userID`) REFERENCES `users`(`userID`) ON DELETE CASCADE
+    FOREIGN KEY (`id`) REFERENCES `users`(`id`) ON DELETE CASCADE
 );
 
 -- Admin table
 CREATE TABLE IF NOT EXISTS `admin` (
     `adminID` INT AUTO_INCREMENT PRIMARY KEY,
-    `userID` INT NOT NULL,
+    `id` INT NOT NULL,
     `name` VARCHAR(255) NOT NULL,
     `password` VARCHAR(255) NOT NULL,
-    FOREIGN KEY (`userID`) REFERENCES `users`(`userID`) ON DELETE CASCADE
+    FOREIGN KEY (`id`) REFERENCES `users`(`id`) ON DELETE CASCADE
 );
 
 -- Report table
@@ -50,8 +55,8 @@ CREATE TABLE IF NOT EXISTS `report` (
     `reportedUser` INT NOT NULL,
     `reason` TEXT NOT NULL,
     `status` ENUM('pending', 'resolved', 'closed') DEFAULT 'pending',
-    FOREIGN KEY (`reportedBy`) REFERENCES `users`(`userID`) ON DELETE CASCADE,
-    FOREIGN KEY (`reportedUser`) REFERENCES `users`(`userID`) ON DELETE CASCADE
+    FOREIGN KEY (`reportedBy`) REFERENCES `users`(`id`) ON DELETE CASCADE,
+    FOREIGN KEY (`reportedUser`) REFERENCES `users`(`id`) ON DELETE CASCADE
 );
 
 -- Booking table
@@ -86,7 +91,7 @@ CREATE TABLE IF NOT EXISTS `reviews` (
     `rating` FLOAT NOT NULL CHECK (`rating` BETWEEN 1 AND 5),  -- Rating 1-5
     `comment` TEXT,  -- Optional comment
     `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY (`reviewerID`) REFERENCES `users`(`userID`) ON DELETE CASCADE,
-    FOREIGN KEY (`reviewedUserID`) REFERENCES `users`(`userID`) ON DELETE CASCADE,
-    FOREIGN KEY (`bookingID`) REFERENCES `booking`(`bookingID`) ON DELETE CASCADE
+    FOREIGN KEY (`reviewerID`) REFERENCES `users`(`id`) ON DELETE CASCADE,
+    FOREIGN KEY (`reviewedUserID`) REFERENCES `users`(`id`) ON DELETE CASCADE,
+    FOREIGN KEY (`bookingID`) REFERENCES `booking`(`bookingid`) ON DELETE CASCADE
 );

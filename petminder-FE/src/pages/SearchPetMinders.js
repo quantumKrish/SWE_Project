@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
+import Navbar from '../components/Navbar';
 
 function SearchPetMinders() {
   const [searchTerm, setSearchTerm] = useState('');
@@ -18,6 +19,7 @@ function SearchPetMinders() {
 
   return (
     <div>
+      <Navbar />
       <h2>Find a Pet Minder</h2>
       <input
         type="text"
