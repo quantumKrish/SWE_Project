@@ -51,6 +51,12 @@ const OwnerMap = ({ minderId }) => {
         console.log("📩 Owner received location:", data);
         setLocation({ latitude: data.latitude, longitude: data.longitude });
       }
+
+      if (data.type === "checklistUpdate") {
+        console.log("📩 Owner received checklist update:", data.tasks);
+        setChecklist(data.tasks);
+      }
+      
     };
 
     // Cleanup function to close the WebSocket when the component unmounts
@@ -80,6 +86,15 @@ const OwnerMap = ({ minderId }) => {
         // Show this message while waiting for the minder's location
         <p>Waiting for minder location...</p>
       )}
+
+      <h3>Checklist Status</h3>
+      <ul>
+        {checklist.map(task => (
+          <li key={task.id} style={{ textDecoration: task.completed ? "line-through" : "none" }}>
+            {task.text} {task.completed ? "✅" : "❌"}
+          </li>
+        ))}
+      </ul>
     </div>
   );
 };

@@ -4,6 +4,12 @@ const MinderTracking = ({ userId }) => {
   const [socket, setSocket] = useState(null);
   const [location, setLocation] = useState({ latitude: null, longitude: null });
   const [retryCount, setRetryCount] = useState(0); // Track retry attempts
+  const [tasks, setTasks] = useState([
+    { id: 1, text: "Pick up the pet", completed: false },
+    { id: 2, text: "Walk the pet", completed: false },
+    { id: 3, text: "Give water", completed: false },
+    { id: 4, text: "Return pet home", completed: false },
+  ]);
 
   useEffect(() => {
     const ws = new WebSocket("ws://localhost:3001");
@@ -77,6 +83,21 @@ const MinderTracking = ({ userId }) => {
     };
   }, [socket, userId]);
 
+  const toggleTask = (id) => {
+    const updatedTasks = tasks.map(task =>
+      task.id === id ? { ...task, completed: !task.completed } : task
+    );
+    setTasks(updatedTasks);
+
+    if (socket) {
+      socket.send(JSON.stringify({
+        type: "checklistUpdate",
+        userId,
+        tasks: updatedTasks,
+      }));
+    }
+  };
+
   return (
     <div>
       <h2>Tracking Minder Location</h2>
@@ -85,6 +106,20 @@ const MinderTracking = ({ userId }) => {
       ) : (
         <p>Waiting for location data...</p>
       )}
+      
+      <h3>Checklist</h3>
+      <ul>
+        {tasks.map(task => (
+          <li key={task.id}>
+            <input
+              type="checkbox"
+              checked={task.completed}
+              onChange={() => toggleTask(task.id)}
+            />
+            {task.text}
+          </li>
+        ))}
+      </ul>
     </div>
   );
 };
