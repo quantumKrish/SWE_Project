@@ -18,6 +18,21 @@ const userModel = {
         return rows[0];
     },
 
+    findByUsername: async (name) => {
+      const [rows] = await db.query('SELECT * FROM users WHERE username = ?', [name]);
+      return rows;
+    },
+
+    searchByUsername: async (name) => {
+      const [rows] = await db.query('SELECT * FROM users where username LIKE ?', [`%${name}%`]);
+      return rows;
+    },
+
+    searchMinderByUsername: async(name) => {
+      const [rows] = await db.query('SELECT * FROM users where username LIKE ? AND role = ?', [`%${name}%`, 'minder']);
+      return rows;
+    },
+
     createUser: async (username, email, password, role) => {
         const [rows] = await db.query('INSERT INTO users (username, email, password, role) VALUES (?, ?, ?, ?)', [username, email, password, role]);
         return rows.insertId;
