@@ -32,7 +32,7 @@ exports.login = async (req, res) => {
     try {
         const { email, password } = req.body;
 
-        const user = await userModel.findByEmail(email);
+        const user = await userModel.getUserByEmail(email);
         if (!user) {
             return res.status(400).json({ message: "Invalid credentials" });
         }
@@ -43,7 +43,8 @@ exports.login = async (req, res) => {
         }
 
         const token = jwt.sign({ id: user.id, email: user.email }, process.env.JWT_SECRET, { expiresIn: '1h' });
-        res.status(200).json({ token, user: { id: user.id, username: user.username, email: user.email, role: user.role } });
+        const { password: _, ...userWithoutPassword } = user;
+        res.status(200).json({ token, user: userWithoutPassword });
     }
     catch (error) {
         console.log(error);

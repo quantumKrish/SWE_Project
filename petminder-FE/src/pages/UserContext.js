@@ -4,17 +4,14 @@ import { useNavigate } from "react-router-dom";
 export const UserContext = createContext();
 
 export const UserProvider = ({ children }) => {
-  const [user, setUser] = useState({
-    id: null,
-    username: "",
-    role: "owner",
-    token: null, 
-  });
-
   
+  const storedUser = localStorage.getItem("user");
+  const initialUser = storedUser ? JSON.parse(storedUser) : null;
+
+  const [user, setUser] = useState(initialUser);
+
   const login = async ({ email, password }) => {
     try {
-      
       const response = await fetch("http://localhost:4000/auth/login", {
         method: "POST",
         headers: {
@@ -31,14 +28,10 @@ export const UserProvider = ({ children }) => {
       const data = await response.json();
       
       const { token, user: userInfo } = data;
-      setUser({
-        id: userInfo.id,
-        username: userInfo.username,
-        role: userInfo.role,
-        token,
-      });
+      const userWithToken = { ...userInfo, token };
 
-      localStorage.setItem("token", token);
+      localStorage.setItem("user", JSON.stringify(userWithToken));
+      setUser(userWithToken);
 
     } catch (error) {
       console.error("Login error:", error);
@@ -47,8 +40,8 @@ export const UserProvider = ({ children }) => {
   };
 
   const logout = () => {
-    setUser({ id: null, name: "", role: "owner", token: null });
-    localStorage.removeItem("token");
+    setUser(null);
+    localStorage.removeItem("user");
   };
 
   return (
