@@ -23,6 +23,14 @@ const userModel = {
         return rows.insertId;
     },
 
+    createOwnerRow: async (userId) => {
+        await db.query('INSERT INTO petOwner (id) VALUES (?)', [userId]);
+    },
+
+    createMinderRow: async (userId) => {
+        await db.query('INSERT INTO petMinder (id) VALUES (?)', [userId]);
+    },
+
     // Add new methods to userModel here
     };
 
