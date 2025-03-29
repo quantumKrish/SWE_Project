@@ -15,6 +15,7 @@ import CodeSent from './pages/CodeSent';
 import VerifyEmail from './pages/VerifyEmail';
 import SetNewPassword from './pages/SetNewPassword';
 import PasswordSuccess from './pages/PasswordSuccess';
+import Message from './pages/Message.js';
 
 
 import { UserProvider } from './pages/UserContext';
@@ -27,6 +28,7 @@ function App() {
           <Route path="/" element={<LandingPage />} />
           <Route path="/home" element={<Home />} />
           <Route path="/search" element={<SearchPetMinders />} />
+          <Route path="/search/:username" element={<SearchPetMinders />} />
           <Route path="/book" element={<BookPetMinder />} />
           <Route path="/tracking" element={<Tracking />} />
           <Route path="/profile" element={<Profile />} />
@@ -37,6 +39,8 @@ function App() {
           <Route path="/verify-email" element={<VerifyEmail />} />
           <Route path="/set-new-password" element={<SetNewPassword />} />
           <Route path="/password-success" element={<PasswordSuccess />} />
+          <Route path="/message" element={<Message />} />
+          <Route path="/message/:id" element={<Message />} />
         </Routes>
       </Router>
     </UserProvider>
