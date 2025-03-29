@@ -18,6 +18,21 @@ const userModel = {
         return rows[0];
     },
 
+    getUserByEmail: async (email) => {
+        const [userRows] = await db.query('SELECT * FROM users WHERE email = ?', [email]);
+        const user = userRows[0];
+
+        if (user.role === 'owner') {
+            const [rows] = await db.query('SELECT * FROM petOwner WHERE id = ?', [user.id]);
+            user.roleDetails = rows[0];
+        }
+        else if (user.role === 'minder') {
+            const [rows] = await db.query('SELECT * FROM petMinder WHERE id = ?', [user.id]);
+            user.roleDetails = rows[0];
+        }
+        return user;
+    },
+
     createUser: async (username, email, password, role) => {
         const [rows] = await db.query('INSERT INTO users (username, email, password, role) VALUES (?, ?, ?, ?)', [username, email, password, role]);
         return rows.insertId;
