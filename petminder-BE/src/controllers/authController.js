@@ -14,6 +14,12 @@ exports.register = async (req, res) => {
         const hashedPassword = await bcrypt.hash(password, 12);
         const userId = await userModel.createUser(username, email, hashedPassword, role);
 
+        if (role === 'owner') {
+            await userModel.createOwnerRow(userId);
+          } else if (role === 'minder') {
+            await userModel.createMinderRow(userId);
+        }        
+
         res.status(201).json({ userId });
     }
     catch (error) {
