@@ -25,10 +25,6 @@ function SearchPetMinders() {
       fetchData();
     }
   }, [username]);
-
-  console.log(username);
-
-
     // TODO: Integrate API call to fetch pet minders by searchTerm
     // setResults(fetchedResults);
 
