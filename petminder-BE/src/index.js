@@ -19,6 +19,7 @@ app.use('/auth', authRoutes);
 app.use('/users', userRoutes);
 // app.use('/location', locationRoutes); 
 // app.use('/messages', messageRoutes); 
+app.use('/pets', petRoutes);
 app.use('/bookings', bookingRoutes); 
 
 app.listen(port, () => {

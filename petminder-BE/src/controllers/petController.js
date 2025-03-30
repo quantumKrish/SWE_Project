@@ -1,3 +1,4 @@
+const db = require('../config/db');
 const petModel = require('../models/petModel');
 
 const petController = {
@@ -12,14 +13,26 @@ const petController = {
     }
   },
 
-  // Get all pets for a specific owner
-  getPetsByOwner: async (req, res) => {
+  // Get all pets for a specific user 
+  getPetsByUserId: async (req, res) => {
     try {
-      const ownerID = req.params.ownerID;
-      const pets = await petModel.findAllByOwner(ownerID);
-      res.status(200).json(pets);
-    } catch (err) {
-      res.status(500).json({ error: err.message });
+      const { userID } = req.params;
+
+      // Find the owner's ID for this user
+      const [ownerRows] = await db.query('SELECT ownerID FROM petowner WHERE id = ?', [userID]);
+
+      if (ownerRows.length === 0) {
+        return res.status(404).json({ message: 'Pet owner not found' });
+      }
+
+      const ownerID = ownerRows[0].ownerID;
+
+      // Get pets for this owner
+      const [petRows] = await db.query('SELECT * FROM pets WHERE ownerID = ?', [ownerID]);
+
+      res.status(200).json(petRows);
+    } catch (error) {
+      res.status(500).json({ message: error.message });
     }
   },
 

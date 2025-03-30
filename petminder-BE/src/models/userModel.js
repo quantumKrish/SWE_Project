@@ -47,6 +47,18 @@ const userModel = {
     },
 
     // Add new methods to userModel here
+
+    getAllMinders: async () => {
+        const [rows] = await db.query(`
+        SELECT users.id AS userID, users.username, users.email, petminder.minderID
+        FROM users
+        INNER JOIN petminder ON petminder.id = users.id
+        WHERE users.role = 'minder'
+        `);
+        return rows;
+      },
+      
+    
     };
 
 module.exports = userModel;

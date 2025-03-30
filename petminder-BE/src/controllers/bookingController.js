@@ -6,13 +6,15 @@ const bookingController = {
     try {
       const bookingData = req.body;
       const newBooking = await bookingModel.create(bookingData); 
-      res.status(201).json({ bookingId: newBooking.id }); 
+      res.status(201).json({ bookingID: newBooking.bookingID }); 
     } catch (error) {
       console.error('Booking creation failed:', error);
       res.status(500).json({ error: error.message });
     }
   },
+  
 
+  
 
   getBookingById: async (req, res) => {
     try {
