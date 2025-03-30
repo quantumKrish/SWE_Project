@@ -1,3 +1,4 @@
+-- Password stored in the database for each entry is the encrypted version of password123. To login as a user use password123 and not what is actually stored in the database.
 USE petminder;
 
 INSERT INTO `users`
