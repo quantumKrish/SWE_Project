@@ -5,6 +5,9 @@ const express = require('express');
 const cors = require('cors');
 const userRoutes = require('./routes/userRoutes');
 const authRoutes = require('./routes/authRoutes');
+const bookingRoutes = require('./routes/bookingRoutes');
+const reviewRoutes = require('./routes/reviewRoutes');
+const petRoutes = require('./routes/petRoutes');
 
 const app = express();
 const port = process.env.PORT || 4000;
@@ -14,9 +17,9 @@ app.use(express.json());
 
 app.use('/auth', authRoutes);
 app.use('/users', userRoutes);
-// app.use('/location', locationRoutes); // to be added later
-// app.use('/messages', messageRoutes); // to be added later
-// app.use('/bookings', bookingRoutes); // to be added later
+// app.use('/location', locationRoutes); 
+// app.use('/messages', messageRoutes); 
+app.use('/bookings', bookingRoutes); 
 
 app.listen(port, () => {
   console.log(`Server is running on http://localhost:${port}`);
