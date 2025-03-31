@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Pet Details - PetMinder</title>
+  <link rel="stylesheet" href="PetDetail.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Rowdies:wght@300;400;700&display=swap" rel="stylesheet" />
+</head>
+<body class="fade-in">
+  <div class="app-container">
+    <main class="pet-detail-page">
+      <h1 class="page-title">Pet Details</h1>
+
+      <div class="pet-detail-container">
+        <img src="https://cdn.builder.io/api/v1/image/assets/TEMP/3ca582665a41cfad00df7f49696301391e560288" alt="Pet Image" class="pet-detail-image" />
+
+        <div class="pet-detail-info">
+          <h2 class="pet-name">Luna</h2>
+          <p><strong>Breed:</strong> Golden Retriever</p>
+          <p><strong>Age:</strong> 4 years</p>
+          <p><strong>Owner:</strong> Alex Johnson</p>
+          <p><strong>Notes:</strong> Loves playing fetch and gets along well with other pets.</p>
+        </div>
+      </div>
+
+      <button class="go-back-button" onclick="goBack()">Go Back</button>
+    </main>
+  </div>
+
+  <script>
+    function goBack() {
+      window.location.href = "AllPets.html";
+    }
+
+    document.querySelectorAll("a").forEach(link => {
+      link.addEventListener("click", function (e) {
+        if (this.hostname === window.location.hostname) {
+          e.preventDefault();
+          const href = this.getAttribute("href");
+
+          const ripple = document.createElement("span");
+          ripple.classList.add("ripple");
+          const rect = this.getBoundingClientRect();
+          ripple.style.left = `${e.clientX - rect.left}px`;
+          ripple.style.top = `${e.clientY - rect.top}px`;
+          this.appendChild(ripple);
+
+          setTimeout(() => ripple.remove(), 600);
+          document.body.classList.add("fade-out");
+          setTimeout(() => (window.location.href = href), 300);
+        }
+      });
+    });
+  </script>
+</body>
+</html>

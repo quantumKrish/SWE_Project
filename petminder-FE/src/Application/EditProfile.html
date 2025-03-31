@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Edit Profile - PetMinder</title>
+  <link href="https://fonts.googleapis.com/css2?family=Rowdies:wght@300;400;700&family=Inter:wght@800&family=Roboto:wght@400;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="EditProfile.css" />
+</head>
+<body class="fade-in">
+  <div class="app-container">
+    <div class="scrollable-content">
+      <main class="edit-profile-page">
+
+        <h1 class="page-title">Edit Profile</h1>
+
+        <!-- Form -->
+        <form class="form-section">
+
+          <div class="form-group center">
+            <label for="profilePicture">
+              <img src="https://via.placeholder.com/100" alt="Current profile picture" class="profile-picture-preview" />
+            </label>
+            <input type="file" id="profilePicture" class="hidden" accept="image/*" />
+            <p class="profile-picture-note">Tap image to change</p>
+          </div>
+
+          <div class="form-group">
+            <label>Username</label>
+            <input type="text" placeholder="@petlover123" />
+          </div>
+
+          <div class="form-group">
+            <label>Full Name</label>
+            <input type="text" placeholder="Alex Johnson" />
+          </div>
+
+          <div class="form-group">
+            <label>Location</label>
+            <input type="text" placeholder="New York, NY" />
+          </div>
+
+          <div class="button-group">
+            <a href="Profile.html" class="go-back-button">Go Back</a>
+            <button type="submit" class="save-button">Save Changes</button>
+          </div>
+        </form>
+
+        <div class="nav-spacer"></div>
+      </main>
+    </div>
+  </div>
+</body>
+</html>

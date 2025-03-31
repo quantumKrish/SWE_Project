@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Book Minder - PetMinder</title>
+  <link href="https://fonts.googleapis.com/css2?family=Rowdies:wght@300;400;700&family=Inter:wght@800&family=Roboto:wght@400;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="BookingMinder.css" />
+</head>
+<body class="fade-in">
+  <div class="app-container">
+    <div class="scrollable-content">
+      <main class="booking-page">
+        <h1 class="page-title">Book Minder</h1>
+
+        <form class="booking-form">
+          <!-- Pet Selection -->
+          <div class="form-group">
+            <label for="pet-select">Select Your Pet</label>
+            <select id="pet-select" name="pet-select" required>
+              <option value="" disabled selected>Select a pet</option>
+              <option value="luna">Luna</option>
+              <option value="charlie">Charlie</option>
+              <option value="bella">Bella</option>
+            </select>
+          </div>
+
+          <!-- Activities -->
+          <fieldset class="form-group">
+            <legend>Choose Activities</legend>
+            <label><input type="checkbox" name="activities" value="Walking" /> Walking</label>
+            <label><input type="checkbox" name="activities" value="Feeding" /> Feeding</label>
+            <label><input type="checkbox" name="activities" value="Sprinting" /> Sprinting</label>
+            <label><input type="checkbox" name="activities" value="Playing" /> Playing</label>
+          </fieldset>
+
+          <!-- Date -->
+          <div class="form-group">
+            <label for="booking-date">Select Date</label>
+            <input type="date" id="booking-date" name="booking-date" required />
+          </div>
+
+          <!-- Time Slot -->
+          <div class="form-group">
+            <label for="booking-time">Select Time Slot</label>
+            <select id="booking-time" name="booking-time" required>
+              <option value="" disabled selected>Select time</option>
+              <option value="08:00">08:00 AM</option>
+              <option value="10:00">10:00 AM</option>
+              <option value="12:00">12:00 PM</option>
+              <option value="14:00">02:00 PM</option>
+              <option value="16:00">04:00 PM</option>
+              <option value="18:00">06:00 PM</option>
+            </select>
+          </div>
+
+          <!-- Notes -->
+          <div class="form-group">
+            <label for="details">Additional Details</label>
+            <textarea id="details" name="details" rows="4" placeholder="Write any important details..."></textarea>
+          </div>
+
+          <!-- Actions -->
+          <div class="form-actions">
+            <button type="button" onclick="window.location.href='SearchMinder.html'">Go Back</button>
+            <button type="submit">Book</button>
+          </div>
+        </form>
+      </main>
+    </div>
+  </div>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      document.body.classList.add("fade-in");
+    });
+  </script>
+</body>
+</html>
