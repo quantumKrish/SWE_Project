@@ -1,0 +1,165 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    transition: all 0.3s ease;
+  }
+  
+  html {
+    height: 100%;
+    scroll-behavior: smooth;
+  }
+  
+  body {
+    font-family: "Rowdies", -apple-system, Roboto, Helvetica, sans-serif;
+    height: 100%;
+    overflow: hidden;
+    background-color: #fff;
+  }
+  
+  .app-container {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    max-width: 480px;
+    margin: 0 auto;
+    position: relative;
+  }
+  
+  .scrollable-content {
+    flex: 1;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    padding-bottom: 80px;
+  }
+  
+  .add-card-page {
+    padding: 40px 22px 0;
+  }
+  
+  .page-title {
+    font-size: 22px;
+    font-weight: 400;
+    margin-bottom: 24px;
+    color: #000;
+  }
+  
+  .card-form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+  
+  .input-group {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+  
+  .input-group label {
+    font-size: 14px;
+    font-weight: 600;
+    color: #333;
+    font-family: "Roboto", sans-serif;
+  }
+  
+  .input-group input {
+    padding: 10px 12px;
+    border: 1px solid #d1d5db;
+    border-radius: 10px;
+    font-size: 14px;
+    font-family: inherit;
+  }
+  
+  .input-row {
+    display: flex;
+    gap: 12px;
+  }
+  
+  .button-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+    margin-top: 12px;
+  }
+  
+  .submit-button {
+    flex: 1;
+    padding: 12px;
+    background-color: #ed6b30;
+    color: white;
+    font-family: "Rowdies", sans-serif;
+    border: none;
+    border-radius: 9999px;
+    font-size: 14px;
+    cursor: pointer;
+    text-align: center;
+  }
+  
+  .submit-button:hover {
+    background-color: #e05a20;
+    transform: scale(1.05);
+  }
+  
+  .submit-button:active {
+    transform: scale(0.95);
+  }
+  
+  .cancel-button {
+    padding: 12px 20px;
+    font-family: "Rowdies", sans-serif;
+    color: #ed6b30;
+    border: 2px solid #ed6b30;
+    background-color: transparent;
+    border-radius: 9999px;
+    font-size: 14px;
+    text-decoration: none;
+    text-align: center;
+  }
+  
+  .cancel-button:hover {
+    background-color: #fff4ef;
+  }
+  
+  .nav-spacer {
+    height: 80px;
+  }
+  
+  /* Animation & Ripple */
+  .fade-in {
+    animation: fadeIn 0.25s ease-in-out;
+  }
+  
+  .fade-out {
+    animation: fadeOut 0.25s ease-in-out forwards;
+  }
+  
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+  }
+  
+  @keyframes fadeOut {
+    from { opacity: 1; }
+    to   { opacity: 0; }
+  }
+  
+  .ripple {
+    position: absolute;
+    border-radius: 50%;
+    background-color: rgba(255, 255, 255, 0.7);
+    width: 10px;
+    height: 10px;
+    transform: scale(0);
+    animation: rippleEffect 0.6s linear;
+    pointer-events: none;
+  }
+  
+  @keyframes rippleEffect {
+    to {
+      transform: scale(15);
+      opacity: 0;
+    }
+  }
+  
