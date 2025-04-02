@@ -7,6 +7,13 @@ const userModel = {
         const [rows] = await db.query('SELECT * FROM users WHERE id = ?', [id]);
         return rows[0];
     },
+
+    // Get user by id 
+    findByEmail: async (email) => {
+        const [rows] = await db.query('SELECT * FROM users WHERE email = ?', [email]);
+        return rows[0];
+    },
+
     // Update user by id
     updateUser: async (id, user) => {
         const userData = {
@@ -22,9 +29,20 @@ const userModel = {
         return userModel.findById(id);
     },
 
-    findByEmail: async (email) => {
-        const [rows] = await db.query('SELECT * FROM users WHERE email = ?', [email]);
-        return rows[0];
+
+    findByUsername: async (name) => {
+      const [rows] = await db.query('SELECT * FROM users WHERE username = ?', [name]);
+      return rows;
+    },
+
+    searchByUsername: async (name) => {
+      const [rows] = await db.query('SELECT * FROM users where username LIKE ?', [`%${name}%`]);
+      return rows;
+    },
+
+    searchMinderByUsername: async(name) => {
+      const [rows] = await db.query('SELECT * FROM users where username LIKE ? AND role = ?', [`%${name}%`, 'minder']);
+      return rows;
     },
 
     getUserByEmail: async (email) => {

@@ -29,6 +29,7 @@ function App() {
           <Route path="/" element={<LandingPage />} />
           <Route path="/home" element={<Home />} />
           <Route path="/search" element={<SearchPetMinders />} />
+          <Route path="/search/:username" element={<SearchPetMinders />} />
           <Route path="/book" element={<BookPetMinder />} />
           <Route path="/tracking" element={<Tracking />} />
           <Route path="/profile" element={<Profile />} />
