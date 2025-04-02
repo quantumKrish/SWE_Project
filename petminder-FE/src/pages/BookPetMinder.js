@@ -27,7 +27,12 @@ function BookPetMinder() {
           return fetch(`http://localhost:4000/pets/owner/${owner.ownerID}`);
         })
         .then(res => res.json())
-        .then(data => setPets(data))
+        .then(data => {
+          console.log(data);  // Log the data
+          setPets(Array.isArray(data) ? data : [])
+        })  
+
+
         .catch(err => console.error('Error fetching pets:', err));
     }
   }, [user]);

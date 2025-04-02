@@ -73,7 +73,7 @@ const userModel = {
         await db.query('INSERT INTO pet SET ?', [petData]);
         const [rows] = await db.query('SELECT * FROM pet WHERE ownerID = ?', [userId]);
         return rows;
-    }
+    },
 
     // Add new methods to userModel here
 
