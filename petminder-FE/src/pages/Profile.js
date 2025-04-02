@@ -1,10 +1,16 @@
-import React, { useContext } from 'react';
-import { UserContext } from './UserContext';
+import React, { useContext, useState, useEffect } from 'react';
 import Navbar from '../components/Navbar';
+import { Link, useNavigate } from 'react-router-dom';
+import "../CSS/profile.css";
+import ReviewerName from '../components/ReviewerName';
 
 function Profile() {
-  const { user } = useContext(UserContext);
-  console.log("User in Profile:", user);
+  const navigate = useNavigate();
+  let user = JSON.parse(localStorage.getItem("user"));
+  let verified = "No";
+  if(user && user.verified == 1) {
+    verified = "Yes";
+  }
 
   if (!user) {
     return (
@@ -16,24 +22,74 @@ function Profile() {
     );
   }
 
+  const handleAddPet = () => {
+    navigate('/add-pet');
+  }
+
   return (
-    <div>
-      <Navbar />
-      <h2>Profile</h2>
-      <p><strong>ID:</strong> {user.id}</p>
-      <p><strong>Name:</strong> {user.username || 'Guest'}</p>
-      <p><strong>Address:</strong> {user.address}</p>
-      <p><strong>Role:</strong> {user.role}</p>
-      <p><strong>Verified:</strong> {user.verified}</p>
-      <p><strong>Rating:</strong> {user.roleDetails.ratings}</p>
-      {user.role === 'minder' && (
-        <>
-          <p><strong>Availability:</strong> {user.roleDetails.availability}</p>
-          <p><strong>Services:</strong> {user.roleDetails.description}</p> 
-        </>  
-      )}
-      {/* Insert additional profile info or forms here */}
+  <div class="fade-in">
+    <div class="app-container">
+      <div class="scrollable-content">
+        <main class="profile-page">
+
+          <section class="profile-header">
+            {/* <img src="https://via.placeholder.com/100" alt="Profile picture" class="profile-picture" /> */}
+            <h2 class="username">@{user.username}</h2>
+            <p class="full-name">{user.name}</p>
+            <p class="location">📍 {user.address}</p>
+            <p class="verified-status">Verified: {verified}</p>
+            {user.role === 'minder' && (
+              <>
+                <p class="bio">Bio: {user.roleDetails.description}</p>
+                <p class="availability">Availability: {user.roleDetails.availability}</p>
+              </>
+            )}
+          </section>
+          <Link to="/edit-profile" class="edit-button" aria-label="Edit Profile">Edit Profile</Link>
+
+          {user.role === 'minder' && user.roleDetails && user.roleDetails.reviews && (
+              <section className="reviews-section">
+                <h3 className="section-title">Reviews</h3>
+                <div id="reviewsContainer" aria-live="polite">
+                  {user.roleDetails.reviews.map((review) => (
+                    <div key={review.reviewID} className="review-card">
+                      <p>
+                        <ReviewerName reviewerID={review.reviewerID} />
+                      </p>
+                      <div class="rating">{"★".repeat(review.rating)}{"☆".repeat(5 - review.rating)}</div>
+                      <p class="review-text">{review.comment}</p>
+                      <p className="review-date">
+                        {new Date(review.created_at).toLocaleDateString()}
+                      </p>
+                    </div>
+                  ))}
+                </div>
+              </section>
+            )}
+
+          { user.role === 'owner' && (
+            <section className="reviews-section">
+            <h3 className="section-title">Pets</h3>
+            <div id="reviewsContainer" aria-live="polite">
+              {user.roleDetails.pets.map((pet) => (
+                <div key={pet.petID} className="review-card">
+                  <p><strong>Name: </strong>  {pet.name} </p>
+                  <p><strong>Breed: </strong> {pet.breed}</p>
+                  <p><strong>Age: </strong> {pet.age}</p>
+                  <p><strong>Notes: </strong> {pet.description}</p>
+                </div>
+              ))}
+            </div>
+            <button className="add-pet-button" onClick={handleAddPet}>Add Pet</button>
+          </section>
+          )}
+          <div class="nav-spacer"></div>
+        </main>
+      </div>
     </div>
+    <Navbar />
+  </div>
+
   );
 }
 

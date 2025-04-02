@@ -1,3 +1,4 @@
+-- Password stored in the database for each entry is the encrypted version of password123. To login as a user use password123 and not what is actually stored in the database.
 USE petminder;
 
 INSERT INTO `users`
@@ -29,3 +30,16 @@ VALUES
   (7, 'Expert in cat boarding',      'Flexible schedule',4.9, 39.765432, -75.234567),
   (8, 'Long-distance dog walking',   'Everyday 9am-6pm',3.9, 38.888888, -76.111111);
 
+INSERT INTO `booking` (`ownerID`, `minderID`, `petID`, `status`, `timeSlot`, `checklist`)
+VALUES
+  (1, 1, 1, 'completed', NOW(), 'Everything was great.'),
+  (2, 2, 1, 'completed', NOW(), 'Satisfied with the service.'),
+  (3, 3, 1, 'completed', NOW(), 'Highly recommended.'),
+  (4, 4, 1, 'completed', NOW(), 'Decent experience.');
+
+INSERT INTO `reviews` (`reviewerID`, `reviewedUserID`, `bookingID`, `rating`, `comment`)
+VALUES
+  (1, 5, 1, 4.5, 'Great service and care!'),
+  (2, 6, 2, 4.0, 'Reliable and friendly.'),
+  (3, 7, 3, 5.0, 'Outstanding experience, would hire again!'),
+  (4, 8, 4, 3.5, 'Good, but room for improvement.');

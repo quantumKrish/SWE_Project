@@ -9,7 +9,16 @@ const userModel = {
     },
     // Update user by id
     updateUser: async (id, user) => {
-        await db.query('UPDATE users SET ? WHERE id = ?', [user, id]);
+        const userData = {
+            name: user.name,
+            address: user.address,
+
+        };
+        await db.query('UPDATE users SET ? WHERE id = ?', [userData, id]);
+
+        if (user.role === 'minder'){
+            await db.query('UPDATE petMinder SET ? WHERE id = ?', [user.roleDetails, id]);
+        }
         return userModel.findById(id);
     },
 
@@ -25,10 +34,15 @@ const userModel = {
         if (user.role === 'owner') {
             const [rows] = await db.query('SELECT * FROM petOwner WHERE id = ?', [user.id]);
             user.roleDetails = rows[0];
+            const [pets] = await db.query('SELECT * FROM pet WHERE ownerID = ?', [user.id]);
+            user.roleDetails.pets = pets;
         }
         else if (user.role === 'minder') {
             const [rows] = await db.query('SELECT * FROM petMinder WHERE id = ?', [user.id]);
             user.roleDetails = rows[0];
+
+            const [reviews] = await db.query('SELECT * FROM reviews WHERE reviewedUserID = ?', [user.id]);
+            user.roleDetails.reviews = reviews;
         }
         return user;
     },
@@ -45,6 +59,21 @@ const userModel = {
     createMinderRow: async (userId) => {
         await db.query('INSERT INTO petMinder (id) VALUES (?)', [userId]);
     },
+
+    addPet: async (userId, pet) => {
+        console.log('Received pet object:', pet);
+        const petData = {
+            name: pet.name,
+            type: pet.type,
+            breed: pet.breed,
+            age: pet.age,
+            description: pet.description,
+            ownerID: userId,
+        };
+        await db.query('INSERT INTO pet SET ?', [petData]);
+        const [rows] = await db.query('SELECT * FROM pet WHERE ownerID = ?', [userId]);
+        return rows;
+    }
 
     // Add new methods to userModel here
 

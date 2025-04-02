@@ -1,0 +1,189 @@
+/* Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    transition: all 0.3s ease;
+  }
+  
+  html {
+    height: 100%;
+    scroll-behavior: smooth;
+  }
+  
+  body {
+    font-family: "Rowdies", -apple-system, Roboto, Helvetica, sans-serif;
+    height: 100%;
+    overflow: hidden;
+    background-color: #fff;
+  }
+  
+  /* App Container */
+  .app-container {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    max-width: 480px;
+    margin: 0 auto;
+    position: relative;
+  }
+  
+  .scrollable-content {
+    flex: 1;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    padding-bottom: 80px;
+  }
+  
+  /* Page Styles */
+  .manage-cards-page {
+    padding: 40px 22px 0;
+  }
+  
+  .page-title {
+    font-size: 22px;
+    font-weight: 400;
+    color: #000;
+    margin-bottom: 24px;
+  }
+  
+  /* Card List */
+  .card-list {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+  
+  .card-item {
+    border: 1px solid #e5e7eb;
+    border-radius: 12px;
+    padding: 16px;
+    background-color: #f9fafb;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .card-info {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+  
+  .card-holder {
+    font-size: 14px;
+    font-weight: 700;
+    color: #000;
+  }
+  
+  .card-number {
+    font-size: 14px;
+    color: #4b5563;
+  }
+  
+  .card-expiry {
+    font-size: 12px;
+    color: #6b7280;
+  }
+  
+  /* Buttons */
+  .delete-button {
+    background-color: #a60303;
+    color: white;
+    border: none;
+    font-family: "Rowdies", sans-serif;
+    font-size: 14px;
+    padding: 8px 12px;
+    border-radius: 9999px;
+    cursor: pointer;
+  }
+  
+  .delete-button:hover {
+    background-color: #8a0202;
+    transform: scale(1.05);
+  }
+  
+  .delete-button:active {
+    transform: scale(0.95);
+  }
+  
+  .button-group {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-top: 24px;
+  }
+  
+  .action-button {
+    display: block;
+    width: 100%;
+    text-align: center;
+    padding: 12px 20px;
+    font-family: "Rowdies", sans-serif;
+    font-size: 14px;
+    border-radius: 9999px;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    color: #fff;
+    background-color: #ed6b30;
+  }
+  
+  .action-button:hover {
+    background-color: #e05a20;
+    transform: scale(1.05);
+  }
+  
+  .action-button:active {
+    transform: scale(0.95);
+  }
+  
+  .action-button.secondary {
+    background-color: #6b7280;
+  }
+  
+  .action-button.secondary:hover {
+    background-color: #4b5563;
+  }
+  
+  /* Spacer */
+  .nav-spacer {
+    height: 80px;
+  }
+  
+  /* Animation */
+  .fade-in {
+    animation: fadeIn 0.25s ease-in-out;
+  }
+  
+  .fade-out {
+    animation: fadeOut 0.25s ease-in-out forwards;
+  }
+  
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+  }
+  
+  @keyframes fadeOut {
+    from { opacity: 1; }
+    to   { opacity: 0; }
+  }
+  
+  .ripple {
+    position: absolute;
+    border-radius: 50%;
+    background-color: rgba(255, 255, 255, 0.7);
+    width: 10px;
+    height: 10px;
+    transform: scale(0);
+    animation: rippleEffect 0.6s linear;
+    pointer-events: none;
+  }
+  
+  @keyframes rippleEffect {
+    to {
+      transform: scale(15);
+      opacity: 0;
+    }
+  }
+  
