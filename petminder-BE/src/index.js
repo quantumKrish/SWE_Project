@@ -1,5 +1,5 @@
 // Initialize the server, socket.io will need to be added later also authentication route once developed
-require('dotenv').config();
+require('dotenv').config({ path: "../.env" });
 
 const express = require('express');
 const cors = require('cors');
