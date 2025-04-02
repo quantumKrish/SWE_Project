@@ -95,3 +95,16 @@ CREATE TABLE IF NOT EXISTS `reviews` (
     FOREIGN KEY (`reviewedUserID`) REFERENCES `users`(`id`) ON DELETE CASCADE,
     FOREIGN KEY (`bookingID`) REFERENCES `booking`(`bookingID`) ON DELETE CASCADE
 );
+
+-- Pet table
+CREATE TABLE IF NOT EXISTS `pet` (
+    `petID` INT AUTO_INCREMENT PRIMARY KEY,
+    `ownerID` INT NOT NULL
+    `name` VARCHAR(255) NOT NULL,
+    `type` ENUM('dog', 'cat', 'other') NOT NULL,
+    `breed` VARCHAR(255),
+    `age` INT,
+    `weight` DECIMAL(5, 2),
+    `description` TEXT,
+    FOREIGN KEY (`ownerID`) REFERENCES `users`(`id`) ON DELETE CASCADE
+);

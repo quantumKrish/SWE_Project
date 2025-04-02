@@ -1,0 +1,136 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    transition: all 0.3s ease;
+  }
+  
+  html {
+    height: 100%;
+    scroll-behavior: smooth;
+  }
+  
+  main {
+    font-family: "Rowdies", -apple-system, Roboto, Helvetica, sans-serif;
+    height: 100%;
+    overflow: hidden;
+    background-color: #fff;
+  }
+  
+  .app-container {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    max-width: 480px;
+    margin: 0 auto;
+  }
+  
+  .scrollable-content {
+    flex: 1;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    padding: 40px 22px 100px;
+  }
+  
+  .add-pet-page {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+  
+  .page-title {
+    font-size: 22px;
+    font-weight: 400;
+    margin-bottom: 10px;
+  }
+  
+  .add-pet-form label {
+    display: flex;
+    flex-direction: column;
+    font-size: 14px;
+    margin-bottom: 16px;
+    color: #111;
+    font-weight: 600;
+  }
+  
+  .add-pet-form input,
+  .add-pet-form select,
+  .add-pet-form textarea {
+    padding: 10px 12px;
+    margin-top: 6px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    font-size: 14px;
+    font-family: inherit;
+    background: #f9f9f9;
+  }
+  
+  .add-pet-form textarea {
+    resize: vertical;
+    min-height: 80px;
+  }
+  
+  .file-upload input[type="file"] {
+    margin-top: 8px;
+  }
+  
+  .form-actions {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+  }
+  
+  .cancel-button,
+  .submit-button {
+    font-family: "Rowdies", sans-serif;
+    padding: 10px 20px;
+    font-size: 14px;
+    border: none;
+    border-radius: 12px;
+    cursor: pointer;
+  }
+  
+  .cancel-button {
+    background-color: #e5e7eb;
+    color: #000;
+  }
+  
+  .cancel-button:hover {
+    background-color: #d1d5db;
+  }
+  
+  .submit-button {
+    background-color: #ed6b30;
+    color: #fff;
+    margin: 0;
+    width: auto;
+  }
+  
+  .submit-button:hover {
+    background-color: #e35d21;
+    transform: scale(1.05);
+  }
+  
+  .submit-button:active {
+    transform: scale(0.95);
+  }
+  
+  /* Animations */
+  .fade-in {
+    animation: fadeIn 0.25s ease-in-out;
+  }
+  
+  .fade-out {
+    animation: fadeOut 0.25s ease-in-out forwards;
+  }
+  
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+  }
+  
+  @keyframes fadeOut {
+    from { opacity: 1; }
+    to   { opacity: 0; }
+  }
+  
