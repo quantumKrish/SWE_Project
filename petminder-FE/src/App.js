@@ -15,6 +15,8 @@ import CodeSent from './pages/CodeSent';
 import VerifyEmail from './pages/VerifyEmail';
 import SetNewPassword from './pages/SetNewPassword';
 import PasswordSuccess from './pages/PasswordSuccess';
+import EditProfile from './pages/EditProfile';
+import AddPet from './pages/AddPet';
 
 
 import { UserProvider } from './pages/UserContext';
@@ -27,6 +29,7 @@ function App() {
           <Route path="/" element={<LandingPage />} />
           <Route path="/home" element={<Home />} />
           <Route path="/search" element={<SearchPetMinders />} />
+          <Route path="/search/:username" element={<SearchPetMinders />} />
           <Route path="/book" element={<BookPetMinder />} />
           <Route path="/tracking" element={<Tracking />} />
           <Route path="/profile" element={<Profile />} />
@@ -37,6 +40,9 @@ function App() {
           <Route path="/verify-email" element={<VerifyEmail />} />
           <Route path="/set-new-password" element={<SetNewPassword />} />
           <Route path="/password-success" element={<PasswordSuccess />} />
+          <Route path="/edit-profile" element={<EditProfile />} />
+          <Route path="/add-pet" element={<AddPet />} />
+          <Route path="/book/:id" element={<BookPetMinder />} />
         </Routes>
       </Router>
     </UserProvider>

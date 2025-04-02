@@ -4,7 +4,7 @@ import "../CSS/register-page.css";
 
 function SignUp() {
   
-  const [username, setUsername] = useState("test");
+  const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [checkPassword, setCheckPassword] = useState("");

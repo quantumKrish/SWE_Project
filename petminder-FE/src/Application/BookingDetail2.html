@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Booking Details - Charlie</title>
+  <link href="https://fonts.googleapis.com/css2?family=Rowdies:wght@300;400;700&family=Inter:wght@800&family=Roboto:wght@400;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="BookingDetail.css" />
+</head>
+
+<body class="fade-in">
+  <div class="app-container">
+    <div class="scrollable-content">
+      <main class="booking-detail-page">
+        <header>
+          <h1 class="page-title">Booking Details</h1>
+        </header>
+
+        <!-- Booking summary section -->
+        <section class="booking-summary">
+          <div class="summary-container">
+            <div class="summary-info">
+              <h2 class="pet-name">🐾 Charlie</h2>
+              <p class="detail"><strong>Minder:</strong> John Smith</p>
+              <p class="detail"><strong>Date:</strong> March 25, 2025</p>
+              <p class="detail"><strong>Status:</strong> <span class="status cancelled">Cancelled</span></p>
+            </div>
+            <img src="https://cdn.builder.io/api/v1/image/assets/TEMP/0ed1370b656c2aa0ebb8b58b050a7008612b035e" alt="Charlie thumbnail" class="pet-thumbnail" />
+          </div>
+        </section>
+
+        <!-- Activities with mixed checkmarks -->
+        <section class="activity-checklist">
+          <h3 class="section-title">Activities</h3>
+          <ul class="activity-list">
+            <li><span class="checkmark">✔️</span> Walking – <span class="duration">30 mins</span></li>
+            <li><span class="unticked">❌</span> Sprint</li>
+            <li><span class="checkmark">✔️</span> Feeding – <span class="duration">10 mins</span></li>
+            <li><span class="unticked">❌</span> Playing</li>
+          </ul>
+        </section>
+
+        <button class="back-button" onclick="goBack()">← Go Back</button>
+        <div class="nav-spacer"></div>
+      </main>
+    </div>
+  </div>
+
+  <script>
+    function goBack() {
+      document.body.classList.add("fade-out");
+      setTimeout(() => {
+        window.location.href = "Bookings.html";
+      }, 300);
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Add Card - PetMinder</title>
+  <link href="https://fonts.googleapis.com/css2?family=Rowdies:wght@300;400;700&family=Inter:wght@800&family=Roboto:wght@400;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="AddCard.css" />
+</head>
+
+<body class="fade-in">
+  <div class="app-container">
+    <div class="scrollable-content">
+      <main class="add-card-page">
+        <header>
+          <h1 class="page-title">Add New Card</h1>
+        </header>
+
+        <form class="card-form">
+          <div class="input-group">
+            <label for="first-name">First Name</label>
+            <input type="text" id="first-name" placeholder="First name" required />
+          </div>
+
+          <div class="input-group">
+            <label for="last-name">Last Name</label>
+            <input type="text" id="last-name" placeholder="Last name" required />
+          </div>
+
+          <div class="input-group">
+            <label for="card-number">Card Number</label>
+            <input type="tel" id="card-number" placeholder="1234 5678 9012 3456" inputmode="numeric" required />
+          </div>
+
+          <div class="input-row">
+            <div class="input-group">
+              <label for="expiry-date">Expiry Date</label>
+              <input type="text" id="expiry-date" placeholder="MM/YY" required />
+            </div>
+            <div class="input-group">
+              <label for="cvv">CVV</label>
+              <input type="tel" id="cvv" placeholder="123" inputmode="numeric" required />
+            </div>
+          </div>
+
+          <div class="button-row">
+            <button type="submit" class="submit-button">Add Card</button>
+            <a href="Payment.html" class="cancel-button">Cancel</a>
+          </div>
+        </form>
+
+        <div class="nav-spacer"></div>
+      </main>
+    </div>
+  </div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      document.body.classList.add('fade-in');
+
+      document.querySelectorAll("a").forEach(link => {
+        link.addEventListener("click", function(e) {
+          if (this.hostname === window.location.hostname) {
+            e.preventDefault();
+            const href = this.getAttribute("href");
+
+            const rect = this.getBoundingClientRect();
+            const x = e.clientX - rect.left;
+            const y = e.clientY - rect.top;
+
+            const ripple = document.createElement("span");
+            ripple.classList.add("ripple");
+            ripple.style.left = `${x}px`;
+            ripple.style.top = `${y}px`;
+            this.appendChild(ripple);
+
+            setTimeout(() => ripple.remove(), 600);
+            document.body.classList.add("fade-out");
+            setTimeout(() => (window.location.href = href), 300);
+          }
+        });
+      });
+
+      document.querySelector("form").addEventListener("submit", (e) => {
+        e.preventDefault();
+        alert("Card added! (mocked)");
+        window.location.href = "Payment.html";
+      });
+    });
+  </script>
+</body>
+</html>

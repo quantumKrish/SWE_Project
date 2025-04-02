@@ -14,6 +14,12 @@ exports.register = async (req, res) => {
         const hashedPassword = await bcrypt.hash(password, 12);
         const userId = await userModel.createUser(username, email, hashedPassword, role);
 
+        if (role === 'owner') {
+            await userModel.createOwnerRow(userId);
+          } else if (role === 'minder') {
+            await userModel.createMinderRow(userId);
+        }        
+
         res.status(201).json({ userId });
     }
     catch (error) {
@@ -26,7 +32,7 @@ exports.login = async (req, res) => {
     try {
         const { email, password } = req.body;
 
-        const user = await userModel.findByEmail(email);
+        const user = await userModel.getUserByEmail(email);
         if (!user) {
             return res.status(400).json({ message: "Invalid credentials" });
         }
@@ -36,8 +42,10 @@ exports.login = async (req, res) => {
             return res.status(400).json({ message: "Invalid credentials" });
         }
 
-        const token = jwt.sign({ id: user.id, email: user.email, role: user.role}, process.env.JWT_SECRET, { expiresIn: '4h' });
-        res.status(200).json({ token, user: { id: user.id, username: user.username, email: user.email, role: user.role } });
+        console.log("JWT_SECRET:", process.env.JWT_SECRET);
+        const token = jwt.sign({ id: user.id, email: user.email }, process.env.JWT_SECRET, { expiresIn: '1h' });
+        const { password: _, ...userWithoutPassword } = user;
+        res.status(200).json({ token, user: userWithoutPassword });
     }
     catch (error) {
         console.log(error);
