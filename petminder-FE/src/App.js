@@ -15,7 +15,8 @@ import CodeSent from './pages/CodeSent';
 import VerifyEmail from './pages/VerifyEmail';
 import SetNewPassword from './pages/SetNewPassword';
 import PasswordSuccess from './pages/PasswordSuccess';
-import Message from './pages/Message.js';
+import EditProfile from './pages/EditProfile';
+import AddPet from './pages/AddPet';
 
 
 import { UserProvider } from './pages/UserContext';
@@ -39,8 +40,8 @@ function App() {
           <Route path="/verify-email" element={<VerifyEmail />} />
           <Route path="/set-new-password" element={<SetNewPassword />} />
           <Route path="/password-success" element={<PasswordSuccess />} />
-          <Route path="/message" element={<Message />} />
-          <Route path="/message/:id" element={<Message />} />
+          <Route path="/edit-profile" element={<EditProfile />} />
+          <Route path="/add-pet" element={<AddPet />} />
         </Routes>
       </Router>
     </UserProvider>

@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Account - PetMinder</title>
+  <link href="https://fonts.googleapis.com/css2?family=Rowdies:wght@300;400;700&family=Inter:wght@800&family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="Account.css" />
+</head>
+<body class="fade-in">
+  <div class="app-container">
+    <div class="scrollable-content">
+      <main class="account-page">
+        <header>
+          <h1 class="page-title">Account</h1>
+        </header>
+
+        <form class="account-form">
+          <label>
+            <span>Username</span>
+            <input type="text" placeholder="@petlover123" />
+          </label>
+
+          <label>
+            <span>Email</span>
+            <input type="email" placeholder="example@email.com" />
+          </label>
+
+          <label>
+            <span>Phone Number</span>
+            <input type="tel" placeholder="+1 123 456 7890" />
+          </label>
+
+          <label>
+            <span>Date of Birth</span>
+            <input type="date" />
+          </label>
+
+          <label>
+            <span>Password</span>
+            <input type="password" placeholder="••••••••" />
+          </label>
+
+          <button type="submit" class="save-button">Save Changes</button>
+        </form>
+
+        <div class="nav-spacer"></div>
+      </main>
+    </div>
+
+    <!-- Bottom Navigation -->
+    <nav class="bottom-navigation">
+      <div class="nav-background"></div>
+      <div class="nav-icons">
+        <a href="Home.html" aria-label="Home">
+          <img src="https://cdn.builder.io/api/v1/image/assets/TEMP/700457b31836db1d0b395fea39fb88c8c67be541" class="nav-icon" alt="Home" />
+        </a>
+        <a href="Messages.html" aria-label="Messages">
+          <img src="https://cdn.builder.io/api/v1/image/assets/TEMP/90c0fa9386108cc4b6b2d22a3755f8429b1df731" class="nav-icon" alt="Messages" />
+        </a>
+        <a href="SearchMinder.html" class="search-button" aria-label="Search">🔍</a>
+        <a href="Settings.html" aria-label="Settings">
+          <img src="https://cdn.builder.io/api/v1/image/assets/TEMP/2b7ab3e93b6956692a7a790f3b78eaeb88398c90" class="nav-icon-large" alt="Settings" />
+        </a>
+        <a href="Profile.html" aria-label="Profile">
+          <img src="https://cdn.builder.io/api/v1/image/assets/TEMP/a5b95812132a4e335c2892d2eed0e35d70aa6271" class="nav-icon" alt="Profile" />
+        </a>
+      </div>
+    </nav>
+  </div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      document.body.classList.add('fade-in');
+
+      document.querySelectorAll('a').forEach(link => {
+        link.addEventListener('click', function (e) {
+          if (this.hostname === window.location.hostname) {
+            e.preventDefault();
+            const href = this.getAttribute('href');
+            const { left, top } = this.getBoundingClientRect();
+            const x = e.clientX - left;
+            const y = e.clientY - top;
+
+            const ripple = document.createElement('span');
+            ripple.classList.add('ripple');
+            ripple.style.left = `${x}px`;
+            ripple.style.top = `${y}px`;
+            this.appendChild(ripple);
+
+            setTimeout(() => ripple.remove(), 600);
+            document.body.classList.add('fade-out');
+            setTimeout(() => (window.location.href = href), 300);
+          }
+        });
+      });
+    });
+  </script>
+</body>
+</html>
