@@ -42,6 +42,7 @@ function App() {
           <Route path="/password-success" element={<PasswordSuccess />} />
           <Route path="/edit-profile" element={<EditProfile />} />
           <Route path="/add-pet" element={<AddPet />} />
+          <Route path="/book/:id" element={<BookPetMinder />} />
         </Routes>
       </Router>
     </UserProvider>

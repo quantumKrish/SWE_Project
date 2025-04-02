@@ -1,54 +1,33 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useState, useEffect } from 'react';
 import Navbar from '../components/Navbar';
-import { UserContext } from './UserContext';
+import { useParams } from 'react-router-dom';
 
 function BookPetMinder() {
-  const { user } = useContext(UserContext);
-
+  const { id } = useParams();
   const [pets, setPets] = useState([]);
-  const [minders, setMinders] = useState([]);
   const [selectedPetId, setSelectedPetId] = useState('');
-  const [selectedMinderId, setSelectedMinderId] = useState('');
   const [ownerID, setOwnerID] = useState(null);
-
   const [bookingDetails, setBookingDetails] = useState({
     date: '',
     time: '',
-    duration: ''
+    duration: '',
   });
 
-  // Fetch owner's pets and ownerID 
+  // Fetch pet details from local storage
   useEffect(() => {
-    if (user?.id) {
-      fetch(`http://localhost:4000/users/petowner/user/${user.id}`)
-        .then(res => res.json())
-        .then(owner => {
-          setOwnerID(owner.ownerID);
-          return fetch(`http://localhost:4000/pets/owner/${owner.ownerID}`);
-        })
-        .then(res => res.json())
-        .then(data => {
-          console.log(data);  // Log the data
-          setPets(Array.isArray(data) ? data : [])
-        })  
-
-
-        .catch(err => console.error('Error fetching pets:', err));
+    const storedUser = localStorage.getItem('user');
+    if (storedUser) {
+      const userData = JSON.parse(storedUser);
+      if (userData.roleDetails && userData.roleDetails.pets) {
+        setPets(userData.roleDetails.pets);
+        setOwnerID(userData.roleDetails.ownerID);
+      }
     }
-  }, [user]);
-
-  // Fetch available minders
-  useEffect(() => {
-    fetch('http://localhost:4000/users/minders')
-      .then(res => res.json())
-      .then(data => setMinders(data))
-      .catch(err => console.error('Error fetching minders:', err));
   }, []);
 
+  // Handle Booking Submission
   const handleSubmit = async (e) => {
     e.preventDefault();
-
-    // Safety check before submission
     if (!ownerID) {
       alert('Owner information not loaded yet.');
       return;
@@ -56,26 +35,25 @@ function BookPetMinder() {
 
     const bookingPayload = {
       ownerID: ownerID,
-      minderID: selectedMinderId ? parseInt(selectedMinderId) : null,
+      minderID: parseInt(id), // Ensure minder ID is correctly set
       petID: selectedPetId ? parseInt(selectedPetId) : null,
       status: 'pending',
       timeSlot: `${bookingDetails.date} ${bookingDetails.time}`,
-      checklist: ''
+      checklist: '',
     };
 
     try {
       const res = await fetch('http://localhost:4000/bookings', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(bookingPayload)
+        body: JSON.stringify(bookingPayload),
       });
 
       const data = await res.json();
       if (res.ok) {
         alert('Booking successful! ID: ' + data.bookingID);
       } else {
-        const errorMsg = data.error || data.message || 'Unknown error';
-        alert('Booking failed: ' + errorMsg);
+        alert('Booking failed: ' + (data.error || 'Unknown error'));
       }
     } catch (err) {
       alert('Booking failed: ' + err.message);
@@ -86,10 +64,9 @@ function BookPetMinder() {
     <>
       <Navbar />
       <div style={{ padding: '1rem' }}>
-        <h2>Book a Pet Minder</h2>
+        <h2>You're booking a session with minder ID: {id}</h2>
         <form onSubmit={handleSubmit}>
-          
-          {/* Pet Dropdown */}
+          {/* Pet Dropdown from Local Storage */}
           <div>
             <label>Choose Pet: </label>
             <select
@@ -98,32 +75,19 @@ function BookPetMinder() {
               required
             >
               <option value="">-- Select Pet --</option>
-              {pets.map((pet) => (
-                <option key={pet.petID} value={pet.petID}>
-                  {pet.name}
-                </option>
-              ))}
+              {pets.length > 0 ? (
+                pets.map((pet) => (
+                  <option key={pet.petID} value={pet.petID}>
+                    {pet.name} ({pet.type})
+                  </option>
+                ))
+              ) : (
+                <option disabled>No pets found</option>
+              )}
             </select>
           </div>
 
-          
-          <div>
-            <label>Choose Minder: </label>
-            <select
-              value={selectedMinderId}
-              onChange={(e) => setSelectedMinderId(e.target.value)}
-              required
-            >
-              <option value="">-- Select Minder --</option>
-              {minders.map((minder) => (
-                <option key={minder.minderID} value={minder.minderID}>
-                  {minder.username}
-                </option>
-              ))}
-            </select>
-          </div>
-
-          
+          {/* Date Input */}
           <div>
             <label>Date: </label>
             <input
@@ -136,7 +100,7 @@ function BookPetMinder() {
             />
           </div>
 
-          
+          {/* Time Input */}
           <div>
             <label>Time: </label>
             <input
@@ -149,7 +113,7 @@ function BookPetMinder() {
             />
           </div>
 
-          
+          {/* Duration Input */}
           <div>
             <label>Duration (hours): </label>
             <input
