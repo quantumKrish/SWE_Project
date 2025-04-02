@@ -99,7 +99,7 @@ CREATE TABLE IF NOT EXISTS `reviews` (
 -- Pet table
 CREATE TABLE IF NOT EXISTS `pet` (
     `petID` INT AUTO_INCREMENT PRIMARY KEY,
-    `ownerID` INT NOT NULL
+    `ownerID` INT NOT NULL,
     `name` VARCHAR(255) NOT NULL,
     `type` ENUM('dog', 'cat', 'other') NOT NULL,
     `breed` VARCHAR(255),
