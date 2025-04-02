@@ -29,7 +29,7 @@ const OwnerMap = ({ minderId }) => {
   const [location, setLocation] = useState({ latitude: null, longitude: null });
 
   useEffect(() => {
-    const ws = new WebSocket("ws://localhost:4000");
+    const ws = new WebSocket("ws://localhost:4001");
     setSocket(ws);
 
     ws.onopen = () => {

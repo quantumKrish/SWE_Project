@@ -6,7 +6,7 @@ const MinderTracking = ({ userId }) => {
   const [sessionActive, setSessionActive] = useState(false); // Track session state
 
   useEffect(() => {
-    const ws = new WebSocket("ws://localhost:4000");
+    const ws = new WebSocket("ws://localhost:4001");
     setSocket(ws);
 
     ws.onopen = () => {
