@@ -74,6 +74,7 @@ CREATE TABLE IF NOT EXISTS `booking` (
     `petID` INT NOT NULL,
     `status` ENUM('pending', 'confirmed', 'completed', 'canceled') DEFAULT 'pending',
     `timeSlot` TIMESTAMP,
+    `duration` INT NOT NULL,
     `checklist` TEXT,
     FOREIGN KEY (`ownerID`) REFERENCES `petOwner`(`ownerID`) ON DELETE CASCADE,
     FOREIGN KEY (`minderID`) REFERENCES `petMinder`(`minderID`) ON DELETE CASCADE

@@ -1,0 +1,64 @@
+
+  
+  
+  /* Table Styling */
+  .booking-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 2rem;
+  }
+  
+  .booking-table th,
+  .booking-table td {
+    padding: 1rem;
+    text-align: left;
+    border: 1px solid #ddd;
+  }
+  
+  .booking-table th {
+    background-color: #007BFF;
+    color: white;
+    font-size: 1.1rem;
+  }
+  
+  .booking-table td {
+    background-color: #fff;
+    font-size: 1rem;
+  }
+  
+  
+  /* Status Styling */
+  .status {
+    text-transform: capitalize;
+    padding: 0.5rem;
+    border-radius: 5px;
+    font-weight: bold;
+  }
+  
+  .status.pending {
+    background-color: #f0ad4e;
+    color: #fff;
+  }
+  
+  .status.completed {
+    background-color: #5bc0de;
+    color: #fff;
+  }
+  
+  .status.canceled {
+    background-color: #d9534f;
+    color: #fff;
+  }
+  
+  .status.confirmed {
+    background-color: #5cb85c;
+    color: #fff;
+  }
+  
+  /* No bookings message */
+  .booking-table p {
+    text-align: center;
+    font-size: 1.2rem;
+    color: #aaa;
+  }
+  

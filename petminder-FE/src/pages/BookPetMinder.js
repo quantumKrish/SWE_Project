@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import Navbar from '../components/Navbar';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom'; // Import useNavigate
 
 function BookPetMinder() {
   const { id } = useParams();
+  const navigate = useNavigate(); // Initialize navigate
   const [pets, setPets] = useState([]);
   const [selectedPetId, setSelectedPetId] = useState('');
   const [ownerID, setOwnerID] = useState(null);
@@ -11,6 +12,7 @@ function BookPetMinder() {
     date: '',
     time: '',
     duration: '',
+    checklist: '',
   });
 
   // Fetch pet details from local storage
@@ -35,12 +37,14 @@ function BookPetMinder() {
 
     const bookingPayload = {
       ownerID: ownerID,
-      minderID: parseInt(id), // Ensure minder ID is correctly set
+      minderID: parseInt(id),
       petID: selectedPetId ? parseInt(selectedPetId) : null,
       status: 'pending',
-      timeSlot: `${bookingDetails.date} ${bookingDetails.time}`,
-      checklist: '',
+      timeSlot: `${bookingDetails.date} ${bookingDetails.time}`,  
+      duration: bookingDetails.duration, 
+      checklist: bookingDetails.checklist.trim(),
     };
+    
 
     try {
       const res = await fetch('http://localhost:4000/bookings', {
@@ -52,6 +56,7 @@ function BookPetMinder() {
       const data = await res.json();
       if (res.ok) {
         alert('Booking successful! ID: ' + data.bookingID);
+        navigate('/home'); // Redirect to Home.js after booking
       } else {
         alert('Booking failed: ' + (data.error || 'Unknown error'));
       }
@@ -66,7 +71,7 @@ function BookPetMinder() {
       <div style={{ padding: '1rem' }}>
         <h2>You're booking a session with minder ID: {id}</h2>
         <form onSubmit={handleSubmit}>
-          {/* Pet Dropdown from Local Storage */}
+          {/* Pet Dropdown */}
           <div>
             <label>Choose Pet: </label>
             <select
@@ -127,6 +132,22 @@ function BookPetMinder() {
             />
           </div>
 
+          {/* Checklist Input */}
+          <div>
+            <label>Instructions for Minder: </label>
+            <textarea
+              placeholder="Separate each instruction with a comma (e.g., Feed at 2 PM, Walk for 30 mins, Give water)"
+              value={bookingDetails.checklist}
+              onChange={(e) =>
+                setBookingDetails({ ...bookingDetails, checklist: e.target.value })
+              }
+              rows="4"
+              cols="50"
+              required
+            />
+          </div>
+
+          {/* Submit Button */}
           <button type="submit">Book Now</button>
         </form>
       </div>

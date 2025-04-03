@@ -26,6 +26,21 @@ const bookingModel = {
       throw error;
     }
   },
+
+  findByMinderId: async (minderID) => {
+    console.log(`Querying database for minderID: ${minderID}`); // Debugging log
+    const [rows] = await db.query('SELECT * FROM booking WHERE minderID = ?', [minderID]);
+    console.log('Database returned:', rows); // Log DB results
+    return rows; // Return all rows
+  },
+  
+  findByOwnerId: async (ownerID) => {
+    console.log(`Querying database for ownerID: ${ownerID}`); // Debugging log
+    const [rows] = await db.query('SELECT * FROM booking WHERE ownerID = ?', [ownerID]);
+    console.log('Database returned:', rows); // Log DB results
+    return rows; // Return all rows
+  },
+  
   
 
   findById: async (bookingID) => {
