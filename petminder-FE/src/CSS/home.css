@@ -49,6 +49,11 @@
     background-color: #d9534f;
     color: #fff;
   }
+
+  .status.rejected {
+    background-color: #d9534f;
+    color: #fff;
+  }
   
   .status.confirmed {
     background-color: #5cb85c;

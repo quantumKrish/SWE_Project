@@ -40,6 +40,12 @@ const bookingModel = {
     console.log('Database returned:', rows); // Log DB results
     return rows; // Return all rows
   },
+
+  // Update booking status
+  updateStatus: async (bookingID, status) => {
+    const [result] = await db.query("UPDATE booking SET status = ? WHERE bookingID = ?", [status, bookingID]);
+    return result.affectedRows > 0;
+  },
   
   
 

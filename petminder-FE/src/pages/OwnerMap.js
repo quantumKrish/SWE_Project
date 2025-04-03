@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom"; // Import useNavigate
 import { MapContainer, TileLayer, Marker, Popup, useMap } from "react-leaflet";
 import L from "leaflet";
 import "leaflet/dist/leaflet.css";
@@ -27,6 +28,7 @@ const ChangeMapView = ({ coords }) => {
 const OwnerMap = ({ minderId }) => {
   const [socket, setSocket] = useState(null);
   const [location, setLocation] = useState({ latitude: null, longitude: null });
+  const navigate = useNavigate(); // Initialize navigation
 
   useEffect(() => {
     const ws = new WebSocket("ws://localhost:4001");
@@ -64,6 +66,11 @@ const OwnerMap = ({ minderId }) => {
       ) : (
         <p>Waiting for minder location...</p>
       )}
+
+      {/* Back to Home Button */}
+      <button onClick={() => navigate("/home")} style={{ marginTop: "20px" }}>
+        🔙 Back to Home
+      </button>
     </div>
   );
 };

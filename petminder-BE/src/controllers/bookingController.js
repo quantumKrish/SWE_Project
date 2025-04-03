@@ -51,7 +51,77 @@ const bookingController = {
     }
   },
   
+    // Accept Booking
+    acceptBooking: async (req, res) => {
+      try {
+        const { id } = req.params;
+        const booking = await bookingModel.findById(id);
   
+        if (!booking) {
+          return res.status(404).json({ error: "Booking not found" });
+        }
+  
+        const updatedBooking = await bookingModel.updateStatus(id, "confirmed");
+        return res.status(200).json({ message: "Booking accepted", booking: updatedBooking });
+      } catch (error) {
+        console.error("Error accepting booking:", error);
+        return res.status(500).json({ error: "Internal server error" });
+      }
+    },
+  
+    // Reject Booking
+    rejectBooking: async (req, res) => {
+      try {
+        const { id } = req.params;
+        const booking = await bookingModel.findById(id);
+  
+        if (!booking) {
+          return res.status(404).json({ error: "Booking not found" });
+        }
+  
+        const updatedBooking = await bookingModel.updateStatus(id, "rejected");
+        return res.status(200).json({ message: "Booking rejected", booking: updatedBooking });
+      } catch (error) {
+        console.error("Error rejecting booking:", error);
+        return res.status(500).json({ error: "Internal server error" });
+      }
+    },
+
+    // Cancel Booking
+    cancelBooking: async (req, res) => {
+      try {
+        const { id } = req.params;
+        const booking = await bookingModel.findById(id);
+  
+        if (!booking) {
+          return res.status(404).json({ error: "Booking not found" });
+        }
+  
+        const updatedBooking = await bookingModel.updateStatus(id, "canceled");
+        return res.status(200).json({ message: "Booking canceled", booking: updatedBooking });
+      } catch (error) {
+        console.error("Error rejecting booking:", error);
+        return res.status(500).json({ error: "Internal server error" });
+      }
+    },
+
+      // Complete Booking
+      completeBooking: async (req, res) => {
+        try {
+          const { id } = req.params;
+          const booking = await bookingModel.findById(id);
+    
+          if (!booking) {
+            return res.status(404).json({ error: "Booking not found" });
+          }
+    
+          const updatedBooking = await bookingModel.updateStatus(id, "completed");
+          return res.status(200).json({ message: "Booking canceled", booking: updatedBooking });
+        } catch (error) {
+          console.error("Error rejecting booking:", error);
+          return res.status(500).json({ error: "Internal server error" });
+        }
+      },
 
   
 
