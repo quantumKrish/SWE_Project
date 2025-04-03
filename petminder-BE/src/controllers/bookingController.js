@@ -13,6 +13,45 @@ const bookingController = {
     }
   },
   
+  getBookingByMinderId: async (req, res) => {
+    try {
+      const minderID = req.params.minderID;
+      console.log(`Fetching bookings for minderID: ${minderID}`); // Debugging log
+  
+      const bookings = await bookingModel.findByMinderId(minderID);
+      console.log('Retrieved Bookings:', bookings); // Log results
+  
+      if (!bookings || bookings.length === 0) {
+        return res.status(404).json({ message: 'No bookings found' });
+      }
+  
+      res.status(200).json(bookings);
+    } catch (error) {
+      console.error('Error fetching minder bookings:', error);
+      res.status(500).json({ error: error.message });
+    }
+  },
+  
+  getBookingByOwnerId: async (req, res) => {
+    try {
+      const ownerID = req.params.ownerID;
+      console.log(`Fetching bookings for ownerID: ${ownerID}`); // Debugging log
+  
+      const bookings = await bookingModel.findByOwnerId(ownerID);
+      console.log('Retrieved Bookings:', bookings); // Log results
+  
+      if (!bookings || bookings.length === 0) {
+        return res.status(404).json({ message: 'No bookings found' });
+      }
+  
+      res.status(200).json(bookings);
+    } catch (error) {
+      console.error('Error fetching owner bookings:', error);
+      res.status(500).json({ error: error.message });
+    }
+  },
+  
+  
 
   
 
