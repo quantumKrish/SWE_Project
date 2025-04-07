@@ -22,7 +22,6 @@ function Navbar() {
         <Link to="/home" aria-label="Home">
           <img src="https://cdn.builder.io/api/v1/image/assets/TEMP/700457b31836db1d0b395fea39fb88c8c67be541" class="nav-icon" alt="Home" />
         </Link>
-        <Link to="/search" aria-label="Search">Search</Link>
         <Link to="/message" aria-label="Messages">
           <img src="https://cdn.builder.io/api/v1/image/assets/TEMP/90c0fa9386108cc4b6b2d22a3755f8429b1df731" class="nav-icon" alt="Messages" />
         </Link>
