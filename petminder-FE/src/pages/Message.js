@@ -46,7 +46,9 @@ function Message() {
       }
     }
     if (id) {
-      fetchData();
+      const interval = setInterval(() => {
+        fetchData();
+      }, 1000);
     }
   }, [id, senderID, receiverID, message]);
 

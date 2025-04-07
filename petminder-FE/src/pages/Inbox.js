@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useContext } from 'react';
-import {useParams} from "react-router-dom";
+import {Link, useParams} from "react-router-dom";
 import {UserContext} from "./UserContext"
 import Navbar from '../components/Navbar';
 import "../CSS/message-page.css"
@@ -31,10 +31,12 @@ function Inbox() {
 
   return (
     <div>
+      <Navbar />
+      <h1> Inbox </h1>
       {
         messageID.length > 0 ? (
         messageID.map((log, index) => (
-          <p>{log.username}</p>
+          <Link to={`/message/${log.id}`}>{log.username}</Link>
         ))) : (
           <p> Empty Inbox </p>
         )

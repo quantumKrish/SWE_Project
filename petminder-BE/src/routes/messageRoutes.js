@@ -78,10 +78,6 @@ router.post('/list/', async (req, res) => {
     }
   }
 
-  if (all_users.length == 0) {
-    all_users.push_back(user_ID);
-  }
-
   const result = [];
 
   for (let x = 0; x < all_users.length; x++) {
