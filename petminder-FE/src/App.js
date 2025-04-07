@@ -17,6 +17,7 @@ import SetNewPassword from './pages/SetNewPassword';
 import PasswordSuccess from './pages/PasswordSuccess';
 import EditProfile from './pages/EditProfile';
 import AddPet from './pages/AddPet';
+import ReviewBooking from "./pages/ReviewBooking";
 
 
 import { UserProvider } from './pages/UserContext';
@@ -43,6 +44,7 @@ function App() {
           <Route path="/edit-profile" element={<EditProfile />} />
           <Route path="/add-pet" element={<AddPet />} />
           <Route path="/book/:id" element={<BookPetMinder />} />
+          <Route path="/review/:bookingId" element={<ReviewBooking />} />
         </Routes>
       </Router>
     </UserProvider>
