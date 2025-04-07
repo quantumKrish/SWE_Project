@@ -91,9 +91,21 @@ const userModel = {
         await db.query('INSERT INTO pet SET ?', [petData]);
         const [rows] = await db.query('SELECT * FROM pet WHERE ownerID = ?', [userId]);
         return rows;
-    }
+    },
 
     // Add new methods to userModel here
+
+    getAllMinders: async () => {
+        const [rows] = await db.query(`
+        SELECT users.id AS userID, users.username, users.email, petminder.minderID
+        FROM users
+        INNER JOIN petminder ON petminder.id = users.id
+        WHERE users.role = 'minder'
+        `);
+        return rows;
+      },
+      
+    
     };
 
 module.exports = userModel;

@@ -19,6 +19,7 @@ import EditProfile from './pages/EditProfile';
 import AddPet from './pages/AddPet';
 import Message from './pages/Message';
 import Inbox from './pages/Inbox';
+import ReviewBooking from "./pages/ReviewBooking";
 
 
 import { UserProvider } from './pages/UserContext';
@@ -46,6 +47,8 @@ function App() {
           <Route path="/add-pet" element={<AddPet />} />
           <Route path="/message/" element={<Inbox />} />
           <Route path="/message/:id" element={<Message />} />
+          <Route path="/book/:id" element={<BookPetMinder />} />
+          <Route path="/review/:bookingId" element={<ReviewBooking />} />
         </Routes>
       </Router>
     </UserProvider>

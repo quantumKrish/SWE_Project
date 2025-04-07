@@ -1,58 +1,73 @@
-import React, { useState, useEffect } from 'react';
-import Navbar from '../components/Navbar';
+import React, { useEffect, useState } from "react";
+import MinderTracking from "./MinderTracking";
+import OwnerMap from "./OwnerMap";
+import { useLocation } from "react-router-dom"; // Import to get URL parameters
 
-function Tracking() {
-  const [trackingActive, setTrackingActive] = useState(false);
-  const [location, setLocation] = useState({ lat: 0, lng: 0 });
+const Tracking = () => {
+    const location = useLocation();
+    const searchParams = new URLSearchParams(location.search);
+    const bookingID = searchParams.get("bookingID"); // Get bookingID from URL
+    const [userRole, setUserRole] = useState(null);
+    const [userId, setUserId] = useState(null);
+    const [minderId, setMinderId] = useState(null);
+    const [duration, setDuration] = useState(null);  // Added duration state
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
 
-  // Placeholder for simulating position updates
-  useEffect(() => {
-    let intervalId;
-    if (trackingActive) {
-      intervalId = setInterval(() => {
-        // TODO: Replace this with real-time location updates from an API or WebSocket
-        setLocation((loc) => ({
-          lat: loc.lat + Math.random() * 0.001,
-          lng: loc.lng + Math.random() * 0.001,
-        }));
-      }, 3000); // every 3 seconds
-    }
-    return () => clearInterval(intervalId);
-  }, [trackingActive]);
+    useEffect(() => {
+        try {
+            const user = JSON.parse(localStorage.getItem("user"));
 
-  const handleStartTracking = () => {
-    // TODO: Start tracking logic (perhaps notify backend)
-    setTrackingActive(true);
-  };
+            if (!user) {
+                setError("No user data found, please log in.");
+                return;
+            }
 
-  const handleStopTracking = () => {
-    // TODO: Stop tracking logic (perhaps notify backend)
-    setTrackingActive(false);
-  };
+            setUserRole(user.role);
+            setUserId(user.roleDetails?.minderID || user.roleDetails?.ownerID);
 
-  return (
-    <div>
-      <Navbar />
-      <h2>Live Tracking</h2>
-      {!trackingActive ? (
-        <button onClick={handleStartTracking}>Start Walk</button>
-      ) : (
-        <button onClick={handleStopTracking}>Stop Walk</button>
-      )}
+            // Fetch the booking details to get the minderID and duration
+            if (bookingID) {
+                fetch(`http://localhost:4000/bookings/${bookingID}`)
+                    .then((res) => res.json())
+                    .then((data) => {
+                        if (data && data.minderID) {
+                            setMinderId(data.minderID);
+                            setDuration(data.duration); // Set duration here
+                        } else {
+                            setError("Minder ID not found for this booking.");
+                        }
+                    })
+                    .catch((err) => {
+                        console.error("Error fetching booking:", err);
+                        setError("Failed to fetch booking data.");
+                    })
+                    .finally(() => setLoading(false));
+            } else {
+                setError("No booking ID provided.");
+                setLoading(false);
+            }
+        } catch (error) {
+            console.error("Error retrieving user data:", error);
+            setError("Failed to retrieve user data.");
+            setLoading(false);
+        }
+    }, [bookingID]);
 
-      <div style={{ marginTop: '1rem' }}>
-        <p><strong>Current Location:</strong></p>
-        <p>Latitude: {location.lat.toFixed(5)}</p>
-        <p>Longitude: {location.lng.toFixed(5)}</p>
+    if (loading) return <p>Loading...</p>;
+    if (error) return <p>Error: {error}</p>;
+    if (!userRole) return <p>User role not found.</p>;
 
-        {/* Placeholder for a map component */}
-        {/* Here you could integrate a map library (e.g., Leaflet, Google Maps) to display location */}
-        <div style={{ width: '300px', height: '200px', background: '#ccc', marginTop: '1rem' }}>
-          <p style={{ textAlign: 'center', paddingTop: '80px' }}>Map Placeholder</p>
+    return (
+        <div>
+            <h2>Live Tracking - {userRole.toUpperCase()}</h2>
+            {userRole === "minder" ? (
+                <MinderTracking userId={userId} bookingID={bookingID} duration={duration} />
+            ) : (
+                <OwnerMap minderId={minderId} />
+            )}
         </div>
-      </div>
-    </div>
-  );
-}
+    );
+};
 
 export default Tracking;

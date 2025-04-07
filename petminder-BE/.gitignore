@@ -28,3 +28,21 @@ logs
 
 ### OS-specific files
 Thumbs.db
+
+### Editor-specific files
+.vscode/
+.idea/
+.DS_Store
+*.swp
+
+### OS-specific files
+Thumbs.db
+
+### WebSockets
+socket.log
+
+### Leaflet (Exclude any related temporary files, cache, or dependencies)
+leaflet/
+leaflet-temp/
+leaflet-cache/
+socket-temp/
