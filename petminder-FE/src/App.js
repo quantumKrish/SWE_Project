@@ -17,6 +17,8 @@ import SetNewPassword from './pages/SetNewPassword';
 import PasswordSuccess from './pages/PasswordSuccess';
 import EditProfile from './pages/EditProfile';
 import AddPet from './pages/AddPet';
+import Message from './pages/Message';
+import Inbox from './pages/Inbox';
 
 
 import { UserProvider } from './pages/UserContext';
@@ -42,6 +44,8 @@ function App() {
           <Route path="/password-success" element={<PasswordSuccess />} />
           <Route path="/edit-profile" element={<EditProfile />} />
           <Route path="/add-pet" element={<AddPet />} />
+          <Route path="/message/" element={<Inbox />} />
+          <Route path="/message/:id" element={<Message />} />
         </Routes>
       </Router>
     </UserProvider>
