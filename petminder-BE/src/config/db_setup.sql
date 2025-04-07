@@ -61,6 +61,7 @@ CREATE TABLE IF NOT EXISTS `report` (
     `reportedBy` INT NOT NULL,
     `reportedUser` INT NOT NULL,
     `reason` TEXT NOT NULL,
+    `description` TEXT NOT NULL,
     `status` ENUM('pending', 'resolved', 'closed') DEFAULT 'pending',
     FOREIGN KEY (`reportedBy`) REFERENCES `users`(`id`) ON DELETE CASCADE,
     FOREIGN KEY (`reportedUser`) REFERENCES `users`(`id`) ON DELETE CASCADE
