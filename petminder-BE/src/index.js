@@ -11,6 +11,8 @@ const authRoutes = require("./routes/authRoutes");
 const getUserRoute = require("./routes/getUserRoute");
 const getMessageRoute = require("./routes/messageRoutes");
 const bookingRoutes = require("./routes/bookingRoutes");
+const reviewRoutes = require('./routes/reviewRoutes');
+
 
 const app = express();
 const expressPort = process.env.PORT || 4000; // API server
@@ -31,6 +33,7 @@ app.use("/users", userRoutes);
 app.use("/getuser", getUserRoute);
 app.use("/message/", getMessageRoute);
 app.use("/bookings", bookingRoutes);
+app.use('/reviews', reviewRoutes);
 
 app.get("/api/user/me", (req, res) => {
   if (!req.user) {

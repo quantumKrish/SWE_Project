@@ -23,7 +23,7 @@ const petModel = {
   
   delete: async (petID) => {
     await db.query('DELETE FROM pets WHERE petID = ?', [petID]);
-  }
+  },
 };
 
 module.exports = petModel;
