@@ -5,7 +5,7 @@ const bookingModel = {
   create: async (bookingData) => {
     try {
       // Query to fetch the correct minderID from the 'petminder' table based on some criteria
-      const [minderRows] = await db.query('SELECT minderID FROM petminder WHERE id = ?', [bookingData.minderID]);
+      const [minderRows] = await db.query('SELECT minderID FROM petMinder WHERE id = ?', [bookingData.minderID]);
   
       if (minderRows.length === 0) {
         throw new Error(`Minder with ID ${bookingData.minderID} not found`);

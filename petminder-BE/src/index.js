@@ -12,6 +12,7 @@ const getUserRoute = require("./routes/getUserRoute");
 const getMessageRoute = require("./routes/messageRoutes");
 const bookingRoutes = require("./routes/bookingRoutes");
 const reviewRoutes = require('./routes/reviewRoutes');
+const reportRoutes = require('./routes/reportRoutes');
 
 
 const app = express();
@@ -34,6 +35,7 @@ app.use("/getuser", getUserRoute);
 app.use("/message/", getMessageRoute);
 app.use("/bookings", bookingRoutes);
 app.use('/reviews', reviewRoutes);
+app.use('/report/', reportRoutes);
 
 app.get("/api/user/me", (req, res) => {
   if (!req.user) {

@@ -55,6 +55,7 @@ function SearchPetMinders() {
               {/* Possibly link to a detail page or booking page */}
               <Link to={`/book/${minder.id}`} style={{ marginRight: '1rem' }}>Book</Link>
               <Link to={`/message/${minder.id}`} style={{ marginRight: '1rem' }}>Message</Link>
+              <Link to={`/report/${minder.id}`} style={{marginRight: '1rem' }}>Report</Link>
             </div>
           ))
         ) : (
