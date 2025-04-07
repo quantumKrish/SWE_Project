@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import Navbar from "../components/Navbar";
-import { useNavigate } from "react-router-dom"; // Import for navigation
+import { useNavigate } from "react-router-dom";
 import "../CSS/home.css";
 
 function Home() {
@@ -9,10 +9,11 @@ function Home() {
   const username = user ? user.username : "Guest";
 
   const [bookings, setBookings] = useState([]);
+  const [userReviews, setUserReviews] = useState([]); // ✅
+
   const userRole = user?.role;
   const userID = user?.roleDetails?.minderID || user?.roleDetails?.ownerID;
 
-  // Format date & time
   const formatDateTime = (dateTimeStr) => {
     const options = {
       weekday: "long",
@@ -26,15 +27,14 @@ function Home() {
     return new Date(dateTimeStr).toLocaleDateString("en-GB", options);
   };
 
-  // Check if the session can be started (10 minutes before time slot or later)
   const canStartSession = (timeSlot) => {
     const now = new Date();
     const bookingTime = new Date(timeSlot);
-    const timeDiff = (bookingTime - now) / (1000 * 60); // Convert milliseconds to minutes
-
-    return timeDiff <= 10; // Allow starting at any point from 10 minutes before onwards
+    const timeDiff = (bookingTime - now) / (1000 * 60);
+    return timeDiff <= 10;
   };
 
+  // ✅ Fetch bookings
   useEffect(() => {
     if (!userID) return;
 
@@ -44,13 +44,9 @@ function Home() {
           ? `http://localhost:4000/bookings/owner/${userID}`
           : `http://localhost:4000/bookings/minder/${userID}`;
 
-      console.log(`Fetching bookings from: ${endpoint}`);
-
       try {
         const res = await fetch(endpoint);
         const data = await res.json();
-
-        console.log("Received booking data:", data);
 
         if (res.ok) {
           setBookings(data);
@@ -65,7 +61,29 @@ function Home() {
     fetchBookings();
   }, [userID, userRole]);
 
-  // Handle accept, reject, or cancel booking
+  // ✅ Fetch user's reviews if owner
+  useEffect(() => {
+    const fetchUserReviews = async () => {
+      try {
+        const res = await fetch(`http://localhost:4000/reviews/user/${user.id}`);
+        const data = await res.json();
+        console.log("✅ Fetched user reviews:", data);
+        setUserReviews(data);
+      } catch (error) {
+        console.error("Error fetching user reviews:", error);
+      }
+    };
+
+    if (user?.id && user?.role === "owner") {
+      fetchUserReviews();
+    }
+  }, [user]);
+
+  // ✅ Helper to check if review exists for a booking
+  const getReviewForBooking = (bookingID) => {
+    return userReviews.find((r) => r.bookingID === bookingID);
+  };
+
   const handleBookingAction = async (bookingID, action) => {
     const endpoint = `http://localhost:4000/bookings/${bookingID}/${action}`;
     try {
@@ -77,7 +95,7 @@ function Home() {
       const data = await res.json();
       if (res.ok) {
         alert(`Booking ${action}ed successfully!`);
-        // Refresh bookings after update
+        window.location.reload();
       } else {
         alert("Error: " + data.error);
       }
@@ -113,37 +131,61 @@ function Home() {
                   <th>Pet ID</th>
                   <th>Checklist</th>
                   <th>Action</th>
+                  <th>Review</th>
                 </tr>
               </thead>
               <tbody>
-                {bookings.map((booking) => (
-                  <tr key={booking.bookingID}>
-                    <td>{booking.bookingID}</td>
-                    <td className={`status ${booking.status.toLowerCase()}`}>{booking.status}</td>
-                    <td>{formatDateTime(booking.timeSlot)}</td>
-                    <td>{booking.duration} hours</td>
-                    <td>{booking.ownerID}</td>
-                    <td>{booking.petID}</td>
-                    <td>{booking.checklist || "No checklist provided"}</td>
-                    <td>
-                      <>
-                      {booking.status === "confirmed" ? (
-                        <>
-                          <button onClick={() => handleBookingAction(booking.bookingID, "cancel")}>Cancel</button>
-                          {/* Show "View Session" button for owners */}
-                          {canStartSession(booking.timeSlot) && (
-                            <button onClick={() => window.location.href = `/tracking?bookingID=${booking.bookingID}`}>
-                            View Session
+                {bookings.map((booking) => {
+                  const review = getReviewForBooking(booking.bookingID);
+
+                  return (
+                    <tr key={booking.bookingID}>
+                      <td>{booking.bookingID}</td>
+                      <td className={`status ${booking.status.toLowerCase()}`}>{booking.status}</td>
+                      <td>{formatDateTime(booking.timeSlot)}</td>
+                      <td>{booking.duration} hours</td>
+                      <td>{booking.minderID}</td>
+                      <td>{booking.petID}</td>
+                      <td>{booking.checklist || "No checklist provided"}</td>
+                      <td>
+                        {booking.status === "confirmed" ? (
+                          <>
+                            <button onClick={() => handleBookingAction(booking.bookingID, "cancel")}>Cancel</button>
+                            {canStartSession(booking.timeSlot) && (
+                              <button onClick={() => window.location.href = `/tracking?bookingID=${booking.bookingID}`}>
+                                View Session
+                              </button>
+                            )}
+                          </>
+                        ) : (
+                          <span>{booking.status}</span>
+                        )}
+                      </td>
+                      <td>
+                        {booking.status === "completed" ? (
+                          review ? (
+                            <div>
+                              <span style={{ color: "green", fontWeight: "bold" }}>✓ Reviewed</span>
+                              <br />
+                              <span>{review.rating}/5</span>
+                              <br />
+                              <em>"{review.comment}"</em>
+                            </div>
+                          ) : (
+                            <button
+                              onClick={() => navigate(`/review/${booking.bookingID}`)}
+                              className="review-btn"
+                            >
+                              Leave Review
                             </button>
-                          )}
-                        </>
-                      ) : (
-                        <span>{booking.status}</span>
-                      )}
-                      </>
-                    </td>
-                  </tr>
-                ))}
+                          )
+                        ) : (
+                          "—"
+                        )}
+                      </td>
+                    </tr>
+                  );
+                })}
               </tbody>
             </table>
           )}
@@ -189,10 +231,9 @@ function Home() {
                       ) : booking.status === "confirmed" ? (
                         <>
                           <button onClick={() => handleBookingAction(booking.bookingID, "cancel")}>Cancel</button>
-                          {/* Show "Start Session" button for minders */}
                           {canStartSession(booking.timeSlot) && (
                             <button onClick={() => window.location.href = `/tracking?bookingID=${booking.bookingID}`}>
-                            Start Session
+                              Start Session
                             </button>
                           )}
                         </>
