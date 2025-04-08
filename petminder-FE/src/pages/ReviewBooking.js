@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
+import "../CSS/review.css"; // Ensure this path is correct
 
 const ReviewBooking = () => {
   const { bookingId } = useParams();
@@ -30,7 +31,7 @@ const ReviewBooking = () => {
         reviewedUserID: booking.minderID,
         bookingID: booking.bookingID,
         rating,
-        comment
+        comment,
       };
 
       await axios.post("http://localhost:4000/reviews", payload);
@@ -45,23 +46,24 @@ const ReviewBooking = () => {
   if (!booking) return <p>Loading booking info...</p>;
 
   return (
-    <div style={{ padding: "20px" }}>
-      <h2>Leave a Review</h2>
-      <p>Booking ID: {booking.bookingID}</p>
-      <p>Minder ID: {booking.minderID}</p>
+    <div className="review-container">
+      <h2 className="review-heading">Leave a Review</h2>
+      <p className="booking-info">Booking ID: {booking.bookingID}</p>
+      <p className="booking-info">Minder ID: {booking.minderID}</p>
 
-      <label>Rating (1-5):</label>
+      <label className="rating-label">Rating (1-5):</label>
       <input
         type="number"
         min={1}
         max={5}
         value={rating}
         onChange={(e) => setRating(e.target.value)}
+        className="rating-input"
       />
 
       <br />
 
-      <label>Comment:</label>
+      <label className="comment-label">Comment:</label>
       <br />
       <textarea
         value={comment}
@@ -69,10 +71,11 @@ const ReviewBooking = () => {
         rows={4}
         cols={40}
         placeholder="Write something nice!"
+        className="comment-textarea"
       />
 
       <br />
-      <button onClick={handleSubmit} style={{ marginTop: "10px" }}>
+      <button onClick={handleSubmit} className="submit-button">
         Submit Review
       </button>
     </div>

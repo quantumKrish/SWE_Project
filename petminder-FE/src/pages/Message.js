@@ -96,29 +96,34 @@ function Message() {
 
 
   return (
-    <div>
-      <Navbar />
-      <h1>{`Messaging: ${receiver.username}`}</h1>
-      <div className="chat-box">
-        <div className="messages">
-          {
-            sorted_logs.length > 0 ? (
-            sorted_logs.map((log, index) => (
-              <span key={index} className={log.send_id === senderID ? "sender" : "receiver"}> {log.message} </span>
-            ))
-            ) : (
-              <span> No message history </span>
-            )
-          }
-        </div>
-        <div className="inputs">
-          <input
-          value = {message}
-          onChange={(e) => setMessage(e.target.value)}></input>
-          <button className="send" onClick={handleSend}>Send</button>
-        </div>
-      </div>
+<div className="message-page-container">
+  <Navbar />
+  <h1>{`Messaging: ${receiver.username}`}</h1>
+  <div className="chat-box">
+    <div className="messages">
+      {
+        sorted_logs.length > 0 ? (
+        sorted_logs.map((log, index) => (
+          <span key={index} className={log.send_id === senderID ? "sender" : "receiver"}>
+            {log.message}
+          </span>
+        ))
+        ) : (
+          <span>No message history</span>
+        )
+      }
     </div>
+    <div className="inputs">
+      <input
+        value={message || ""}
+        onChange={(e) => setMessage(e.target.value)}
+        placeholder="Type a message..."
+      />
+      <button className="send" onClick={handleSend}>Send</button>
+    </div>
+  </div>
+</div>
+
   );
 }
 

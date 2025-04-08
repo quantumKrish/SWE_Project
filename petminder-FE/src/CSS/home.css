@@ -1,69 +1,158 @@
+/* home.css */
 
-  
-  
-  /* Table Styling */
-  .booking-table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-top: 2rem;
-  }
-  
-  .booking-table th,
-  .booking-table td {
-    padding: 1rem;
-    text-align: left;
-    border: 1px solid #ddd;
-  }
-  
-  .booking-table th {
-    background-color: #007BFF;
-    color: white;
-    font-size: 1.1rem;
-  }
-  
-  .booking-table td {
-    background-color: #fff;
-    font-size: 1rem;
-  }
-  
-  
-  /* Status Styling */
-  .status {
-    text-transform: capitalize;
-    padding: 0.5rem;
-    border-radius: 5px;
-    font-weight: bold;
-  }
-  
-  .status.pending {
-    background-color: #f0ad4e;
-    color: #fff;
-  }
-  
-  .status.completed {
-    background-color: #5bc0de;
-    color: #fff;
-  }
-  
-  .status.canceled {
-    background-color: #d9534f;
-    color: #fff;
-  }
+/* Container */
+.container {
+  font-family: 'Arial', sans-serif;
+  margin: 20px;
+  padding: 20px;
+}
 
-  .status.rejected {
-    background-color: #d9534f;
-    color: #fff;
-  }
-  
-  .status.confirmed {
-    background-color: #5cb85c;
-    color: #fff;
-  }
-  
-  /* No bookings message */
-  .booking-table p {
-    text-align: center;
-    font-size: 1.2rem;
-    color: #aaa;
-  }
-  
+/* Header */
+h1 {
+  text-align: center;
+  font-size: 2rem;
+  color: #333;
+}
+
+h2 {
+  font-size: 1.5rem;
+  color: #444;
+  margin-bottom: 10px;
+}
+
+/* Button Styles */
+.book-minder-btn,
+.action-btn,
+.review-btn {
+  background-color: #2a9d8f;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  font-size: 1rem;
+  cursor: pointer;
+  border-radius: 5px;
+  margin: 5px;
+  transition: background-color 0.3s ease;
+}
+
+.book-minder-btn:hover,
+.action-btn:hover,
+.review-btn:hover {
+  background-color: #264653;
+}
+
+/* Button color variation */
+.cancel {
+  background-color: #e76f51;
+}
+
+.cancel:hover {
+  background-color: #f4a261;
+}
+
+.accept {
+  background-color: #2a9d8f;
+}
+
+.accept:hover {
+  background-color: #264653;
+}
+
+.reject {
+  background-color: #e63946;
+}
+
+.reject:hover {
+  background-color: #f1c6c6;
+}
+
+.action-btn {
+  padding: 8px 16px;
+  margin-right: 10px;
+}
+
+/* Tables */
+.booking-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+}
+
+.booking-table th,
+.booking-table td {
+  padding: 12px;
+  text-align: left;
+  border: 1px solid #ddd;
+}
+
+.booking-table th {
+  background-color: #f4a261;
+  color: white;
+}
+
+.booking-table td {
+  background-color: #fafafa;
+}
+
+/* Table Status Colors */
+.status {
+  font-weight: bold;
+  text-transform: capitalize;
+}
+
+.status.pending {
+  color: #e63946;
+}
+
+.status.confirmed {
+  color: #2a9d8f;
+}
+
+.status.completed {
+  color: #264653;
+}
+
+/* Review Section */
+.review-status {
+  color: #2a9d8f;
+  font-weight: bold;
+}
+
+.review-btn {
+  background-color: #264653;
+  color: white;
+  font-size: 1rem;
+  padding: 8px 16px;
+  cursor: pointer;
+  border-radius: 5px;
+  transition: background-color 0.3s ease;
+}
+
+.review-btn:hover {
+  background-color: #2a9d8f;
+}
+
+/* General Layout */
+.owner-bookings,
+.minder-bookings {
+  margin-top: 30px;
+}
+
+.owner-bookings button,
+.minder-bookings button {
+  margin-top: 15px;
+}
+
+.owner-bookings table,
+.minder-bookings table {
+  width: 100%;
+  margin-top: 20px;
+  border-collapse: collapse;
+}
+
+/* Misc */
+p {
+  text-align: center;
+  color: #666;
+}
+

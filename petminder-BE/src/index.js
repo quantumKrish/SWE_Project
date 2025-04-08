@@ -3,7 +3,7 @@ console.log("JWT_SECRET:", process.env.JWT_SECRET); // Debugging line
 
 const express = require("express");
 const cors = require("cors");
-const http = require("http"); // Required for WebSocket integration
+const http = require("http");
 const WebSocket = require("ws");
 
 const userRoutes = require("./routes/userRoutes");
@@ -11,19 +11,18 @@ const authRoutes = require("./routes/authRoutes");
 const getUserRoute = require("./routes/getUserRoute");
 const getMessageRoute = require("./routes/messageRoutes");
 const bookingRoutes = require("./routes/bookingRoutes");
-const reviewRoutes = require('./routes/reviewRoutes');
-const reportRoutes = require('./routes/reportRoutes');
-
+const reviewRoutes = require("./routes/reviewRoutes");
+const reportRoutes = require("./routes/reportRoutes");
 
 const app = express();
-const expressPort = process.env.PORT || 4000; // API server
-const wsPort = 4001; // WebSocket server
+const expressPort = process.env.PORT || 4000;
+const wsPort = 4001;
 
 // Middleware
 app.use(
   cors({
-    origin: "http://localhost:3000", // Allow only your frontend
-    credentials: true, // Allow cookies and authentication headers
+    origin: "http://localhost:3000",
+    credentials: true,
   })
 );
 app.use(express.json());
@@ -34,8 +33,8 @@ app.use("/users", userRoutes);
 app.use("/getuser", getUserRoute);
 app.use("/message/", getMessageRoute);
 app.use("/bookings", bookingRoutes);
-app.use('/reviews', reviewRoutes);
-app.use('/report/', reportRoutes);
+app.use("/reviews", reviewRoutes);
+app.use("/report/", reportRoutes);
 
 app.get("/api/user/me", (req, res) => {
   if (!req.user) {
@@ -44,18 +43,17 @@ app.get("/api/user/me", (req, res) => {
   res.json(req.user);
 });
 
-// Start Express API server
+// Start Express server
 app.listen(expressPort, () => {
   console.log(`🚀 Server running at http://localhost:${expressPort}`);
 });
 
-// Create an HTTP server for WebSocket
+// WebSocket setup
 const server = http.createServer();
 const wss = new WebSocket.Server({ server });
 
-// Store connected minders and owners tracking them
-const minders = {};
-const owners = {};
+const minders = new Map(); // minderId -> ws
+const trackingOwners = new Map(); // minderId -> Set<ws>
 
 wss.on("connection", (ws) => {
   console.log("✅ WebSocket client connected");
@@ -65,57 +63,81 @@ wss.on("connection", (ws) => {
     console.log("📩 Received:", data);
 
     if (data.type === "register") {
-      minders[data.userId] = ws;
-      console.log(`🔗 Minder registered: ${data.userId}`);
-    } else if (data.type === "location") {
-      if (minders[data.userId]) {
-        console.log(
-          `📍 Minder ${data.userId} at ${data.latitude}, ${data.longitude}`
-        );
+      const minderId = data.userId;
+      ws.userId = minderId;
+      ws.role = "minder";
 
-        if (owners[data.userId]) {
-          owners[data.userId].forEach((ownerWs) => {
+      minders.set(minderId, ws);
+      console.log(`🔗 Minder registered: ${minderId}`);
+    }
+
+    else if (data.type === "location") {
+      const { userId, latitude, longitude } = data;
+      if (minders.has(userId)) {
+        console.log(`📍 Minder ${userId} at ${latitude}, ${longitude}`);
+
+        const owners = trackingOwners.get(userId);
+        if (owners) {
+          owners.forEach((ownerWs) => {
             if (ownerWs.readyState === WebSocket.OPEN) {
-              ownerWs.send(
-                JSON.stringify({
-                  type: "location",
-                  minderId: data.userId,
-                  latitude: data.latitude,
-                  longitude: data.longitude,
-                })
-              );
+              ownerWs.send(JSON.stringify({
+                type: "location",
+                minderId: userId,
+                latitude,
+                longitude,
+              }));
             }
           });
         }
       }
-    } else if (data.type === "track") {
-      if (minders[data.minderId]) {
-        if (!owners[data.minderId]) owners[data.minderId] = [];
-        owners[data.minderId].push(ws);
-        console.log(`👀 Owner tracking minder: ${data.minderId}`);
-        console.log(
-          `📝 Current owners tracking minder ${data.minderId}:`,
-          owners[data.minderId].length
-        );
-      } else {
-        console.log(
-          `⚠️ Minder ${data.minderId} is not registered, owner cannot track`
-        );
+    }
+
+    else if (data.type === "track") {
+      const minderId = data.minderId;
+      ws.role = "owner";
+
+      if (!trackingOwners.has(minderId)) {
+        trackingOwners.set(minderId, new Set());
       }
+
+      trackingOwners.get(minderId).add(ws);
+      console.log(`👀 Owner tracking minder: ${minderId}`);
+      console.log(`📝 Current owners tracking minder ${minderId}: ${trackingOwners.get(minderId).size}`);
     }
   });
 
   ws.on("close", () => {
     console.log("❌ WebSocket client disconnected");
 
-    Object.keys(minders).forEach((id) => {
-      if (minders[id] === ws) delete minders[id];
-    });
+    if (ws.role === "minder") {
+      const minderId = ws.userId;
+      minders.delete(minderId);
 
-    Object.keys(owners).forEach((minderId) => {
-      owners[minderId] = owners[minderId].filter((ownerWs) => ownerWs !== ws);
-      if (owners[minderId].length === 0) delete owners[minderId];
-    });
+      const owners = trackingOwners.get(minderId);
+      if (owners) {
+        owners.forEach((ownerWs) => {
+          if (ownerWs.readyState === WebSocket.OPEN) {
+            ownerWs.send(JSON.stringify({
+              type: "minder_disconnected",
+              minderId,
+            }));
+          }
+        });
+        trackingOwners.delete(minderId);
+      }
+
+      console.log(`🚫 Minder ${minderId} disconnected, owners notified.`);
+    }
+
+    // Optional: clean up owners
+    if (ws.role === "owner") {
+      for (const [minderId, ownerSet] of trackingOwners.entries()) {
+        ownerSet.delete(ws);
+        if (ownerSet.size === 0) {
+          trackingOwners.delete(minderId);
+        }
+      }
+    }
   });
 });
 

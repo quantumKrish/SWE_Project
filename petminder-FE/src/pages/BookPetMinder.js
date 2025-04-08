@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import Navbar from '../components/Navbar';
 import { useParams, useNavigate } from 'react-router-dom'; // Import useNavigate
+import '../CSS/booking.css'; // Import the booking-specific CSS file
 
 function BookPetMinder() {
   const { id } = useParams();
@@ -68,11 +69,11 @@ function BookPetMinder() {
   return (
     <>
       <Navbar />
-      <div style={{ padding: '1rem' }}>
+      <div className="booking-container">
         <h2>You're booking a session with minder ID: {id}</h2>
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={handleSubmit} className="booking-form">
           {/* Pet Dropdown */}
-          <div>
+          <div className="form-group">
             <label>Choose Pet: </label>
             <select
               value={selectedPetId}
@@ -93,7 +94,7 @@ function BookPetMinder() {
           </div>
 
           {/* Date Input */}
-          <div>
+          <div className="form-group">
             <label>Date: </label>
             <input
               type="date"
@@ -106,7 +107,7 @@ function BookPetMinder() {
           </div>
 
           {/* Time Input */}
-          <div>
+          <div className="form-group">
             <label>Time: </label>
             <input
               type="time"
@@ -119,21 +120,22 @@ function BookPetMinder() {
           </div>
 
           {/* Duration Input */}
-          <div>
+          <div className="form-group">
             <label>Duration (hours): </label>
             <input
               type="number"
-              min="1"
+              min="0"
+              step="0.01" // allows decimal input
               value={bookingDetails.duration}
               onChange={(e) =>
-                setBookingDetails({ ...bookingDetails, duration: e.target.value })
+                setBookingDetails({ ...bookingDetails, duration: parseFloat(e.target.value) })
               }
               required
             />
           </div>
 
           {/* Checklist Input */}
-          <div>
+          <div className="form-group">
             <label>Instructions for Minder: </label>
             <textarea
               placeholder="Separate each instruction with a comma (e.g., Feed at 2 PM, Walk for 30 mins, Give water)"
@@ -148,7 +150,7 @@ function BookPetMinder() {
           </div>
 
           {/* Submit Button */}
-          <button type="submit">Book Now</button>
+          <button type="submit" className="submit-btn">Book Now</button>
         </form>
       </div>
     </>

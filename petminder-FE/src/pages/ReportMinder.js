@@ -1,34 +1,35 @@
 import React, { useState, useEffect, useContext } from "react";
-import {useParams} from "react-router-dom";
-import {UserContext} from "./UserContext"
+import { useParams } from "react-router-dom";
+import { UserContext } from "./UserContext";
+import "../CSS/reportMinder.css";
 
-import Navbar from '../components/Navbar.js'
+import Navbar from "../components/Navbar.js";
+
 const ReportMinder = () => {
   const { userid } = useParams();
-
   const [title, setTitle] = useState("");
   const [reportedUser, setReportedUser] = useState(null);
   const [description, setDescription] = useState("");
 
-  const {user} = useContext(UserContext);
+  const { user } = useContext(UserContext);
 
-  useEffect( () => {
+  useEffect(() => {
     async function fetchData() {
       try {
         const res = await fetch(`http://localhost:4000/getuser/id/${userid}`);
         if (!res.ok) throw new Error("Error failure getting user details!");
         const data = await res.json();
         setReportedUser(data);
-      } catch(error) {
+      } catch (error) {
         throw error;
       }
     }
     fetchData();
-    }, [userid]);
+  }, [userid]);
 
   const handleSubmit = async () => {
     if (description.trim()) {
-      if (userid == null) return
+      if (userid == null) return;
       const response = await fetch(`http://localhost:4000/report/${user.id}/${userid}`, {
         method: "POST",
         headers: {
@@ -38,49 +39,43 @@ const ReportMinder = () => {
           to: userid,
           by: user.id,
           title: title,
-          description: description
+          description: description,
         }),
       });
       alert(await response.json());
     }
-  }
+  };
 
-  if (!reportedUser) return <p>Loading...</p>
+  if (!reportedUser) return <p>Loading...</p>;
 
   return (
-    <div>
-      <h1>Report {reportedUser.username}</h1>
-      <br />
-
-      <label>Reason</label>
-      <br />
-      <textarea
-        value={title}
-        onChange={(e) => setTitle(e.target.value)}
-        rows={1}
-        cols={40}
-        placeholder="Enter title here..."
-      />
-      <br />
-
-      <label>Description:</label>
-      <br />
-      <textarea
-        value={description}
-        onChange={(e) => setDescription(e.target.value)}
-        rows={4}
-        cols={40}
-        placeholder="Enter main report here..."
-      />
-
-      <br />
-      <button onClick={handleSubmit} style={{ marginTop: "10px" }}>
-        Submit Report
-      </button>
-
-
+    <main>
+      <div className="report-minder-page">
+        <h1 className="report-heading">Report {reportedUser.username}</h1>
+        <label>Reason</label>
+        <textarea
+          className="form-input"
+          value={title}
+          onChange={(e) => setTitle(e.target.value)}
+          rows={1}
+          cols={40}
+          placeholder="Enter title here..."
+        />
+        <label>Description:</label>
+        <textarea
+          className="form-input"
+          value={description}
+          onChange={(e) => setDescription(e.target.value)}
+          rows={4}
+          cols={40}
+          placeholder="Enter main report here..."
+        />
+        <button className="submit-button" onClick={handleSubmit}>
+          Submit Report
+        </button>
+      </div>
       <Navbar />
-    </div>
+    </main>
   );
 };
 

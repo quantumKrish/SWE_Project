@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Navbar from "../components/Navbar";
 import { useNavigate } from "react-router-dom";
-import "../CSS/home.css";
+import "../CSS/home.css"; // Ensure this is styled to match the design
 
 function Home() {
   const navigate = useNavigate();
@@ -9,7 +9,7 @@ function Home() {
   const username = user ? user.username : "Guest";
 
   const [bookings, setBookings] = useState([]);
-  const [userReviews, setUserReviews] = useState([]); // ✅
+  const [userReviews, setUserReviews] = useState([]);
 
   const userRole = user?.role;
   const userID = user?.roleDetails?.minderID || user?.roleDetails?.ownerID;
@@ -104,18 +104,14 @@ function Home() {
   };
 
   return (
-    <div className="container">
+    <div className="home-container">
       <h1>Welcome {username} to PetMinder</h1>
-      <p>Your one-stop solution for pet minding services.</p>
       <Navbar />
 
       {/* Owner View */}
       {userRole === "owner" && (
-        <div>
+        <div className="owner-bookings">
           <h2>Your Bookings</h2>
-          <button onClick={() => window.location.href = "/search"} className="book-minder-btn">
-            Book a Minder
-          </button>
           {bookings.length === 0 ? (
             <p>No bookings found.</p>
           ) : (
@@ -149,9 +145,17 @@ function Home() {
                       <td>
                         {booking.status === "confirmed" ? (
                           <>
-                            <button onClick={() => handleBookingAction(booking.bookingID, "cancel")}>Cancel</button>
+                            <button
+                              onClick={() => handleBookingAction(booking.bookingID, "cancel")}
+                              className="action-btn cancel"
+                            >
+                              Cancel
+                            </button>
                             {canStartSession(booking.timeSlot) && (
-                              <button onClick={() => window.location.href = `/tracking?bookingID=${booking.bookingID}`}>
+                              <button
+                                onClick={() => window.location.href = `/tracking?bookingID=${booking.bookingID}`}
+                                className="action-btn"
+                              >
                                 View Session
                               </button>
                             )}
@@ -164,7 +168,7 @@ function Home() {
                         {booking.status === "completed" ? (
                           review ? (
                             <div>
-                              <span style={{ color: "green", fontWeight: "bold" }}>✓ Reviewed</span>
+                              <span className="review-status">✓ Reviewed</span>
                               <br />
                               <span>{review.rating}/5</span>
                               <br />
@@ -193,7 +197,7 @@ function Home() {
 
       {/* Minder View */}
       {userRole === "minder" && (
-        <div>
+        <div className="minder-bookings">
           <h2>Assigned Bookings</h2>
           {bookings.length === 0 ? (
             <p>No bookings assigned.</p>
@@ -224,14 +228,32 @@ function Home() {
                     <td>
                       {booking.status === "pending" ? (
                         <>
-                          <button onClick={() => handleBookingAction(booking.bookingID, "accept")}>Accept</button>
-                          <button onClick={() => handleBookingAction(booking.bookingID, "reject")}>Reject</button>
+                          <button
+                            onClick={() => handleBookingAction(booking.bookingID, "accept")}
+                            className="action-btn accept"
+                          >
+                            Accept
+                          </button>
+                          <button
+                            onClick={() => handleBookingAction(booking.bookingID, "reject")}
+                            className="action-btn reject"
+                          >
+                            Reject
+                          </button>
                         </>
                       ) : booking.status === "confirmed" ? (
                         <>
-                          <button onClick={() => handleBookingAction(booking.bookingID, "cancel")}>Cancel</button>
+                          <button
+                            onClick={() => handleBookingAction(booking.bookingID, "cancel")}
+                            className="action-btn cancel"
+                          >
+                            Cancel
+                          </button>
                           {canStartSession(booking.timeSlot) && (
-                            <button onClick={() => window.location.href = `/tracking?bookingID=${booking.bookingID}`}>
+                            <button
+                              onClick={() => window.location.href = `/tracking?bookingID=${booking.bookingID}`}
+                              className="action-btn"
+                            >
                               Start Session
                             </button>
                           )}

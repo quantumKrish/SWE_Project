@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom"; // Import useNavigate at the top
+import "../CSS/minderTracking.css"; // Import the updated CSS file
+
 
 const MinderTracking = ({ userId, bookingID, duration }) => {
   const [socket, setSocket] = useState(null);
@@ -9,6 +11,7 @@ const MinderTracking = ({ userId, bookingID, duration }) => {
   const [checklist, setChecklist] = useState([]); // Stores checklist items
   const [checkedItems, setCheckedItems] = useState([]); // Tracks checked items
   const navigate = useNavigate(); // Initialize navigation
+  const [showTerms, setShowTerms] = useState(false);
 
   useEffect(() => {
     const ws = new WebSocket("ws://localhost:4001");
@@ -74,6 +77,14 @@ const MinderTracking = ({ userId, bookingID, duration }) => {
 
     return () => clearInterval(interval);
   }, [sessionActive, timeLeft]);
+
+  // Auto end session if time is up
+  useEffect(() => {
+    if (timeLeft <= 0 && sessionActive) {
+      alert("⏰ Time's up! Session has ended automatically.");
+      handleEndSession(); // auto-end the session
+    }
+  }, [timeLeft, sessionActive]);
 
   useEffect(() => {
     // Fetch the checklist from the booking details
@@ -142,10 +153,38 @@ const MinderTracking = ({ userId, bookingID, duration }) => {
   };
 
   return (
-    <div>
+    <div className="minder-tracking">
       <h2>Minder Tracking</h2>
+
       {!sessionActive ? (
-        <button onClick={() => setSessionActive(true)}>Start Session</button>
+        <>
+          <button className="start-session-btn" onClick={() => setShowTerms(true)}>Start Session</button>
+
+          {showTerms && (
+            <div className="modal">
+              <div className="modal-content">
+                <h3>🚨 Terms & Conditions</h3>
+                <p>
+                  By starting this session, you agree to:
+                </p>
+                <ul>
+                  <li>You must keep your device’s location services turned ON at all times.</li>
+                  <li>Disabling or faking your location may result in serious consequences, including:
+                    <ul>
+                      <li>⚠️ Fines up to £1,000</li>
+                      <li>⚠️ Legal action including jail time</li>
+                    </ul>
+                  </li>
+                  <li>You must complete all checklist items before ending the session.</li>
+                </ul>
+                <div className="modal-actions">
+                  <button onClick={() => { setShowTerms(false); setSessionActive(true); }}>✅ I Accept</button>
+                  <button onClick={() => setShowTerms(false)} style={{ marginLeft: "10px" }}>❌ Decline</button>
+                </div>
+              </div>
+            </div>
+          )}
+        </>
       ) : (
         <>
           <p>Session Active ✅</p>
@@ -171,8 +210,7 @@ const MinderTracking = ({ userId, bookingID, duration }) => {
             ))}
           </ul>
 
-          {/* End Session Button (Disabled until all items checked) */}
-          <button onClick={handleEndSession} disabled={!allItemsChecked}>
+          <button onClick={handleEndSession} disabled={!allItemsChecked} className="end-session-btn">
             End Session
           </button>
         </>

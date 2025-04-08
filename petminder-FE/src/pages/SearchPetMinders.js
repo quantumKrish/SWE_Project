@@ -1,66 +1,86 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import Navbar from '../components/Navbar';
-
+import '../CSS/profile.css'
 function SearchPetMinders() {
-
-  const {username} = useParams();
-
-  console.log(username);
-
+  const { username } = useParams();
   const [searchTerm, setSearchTerm] = useState('');
   const [results, setResults] = useState([]);
 
-  useEffect( () => {
+  useEffect(() => {
     async function fetchData() {
       try {
         const res = await fetch(`http://localhost:4000/getuser/minder/username/${searchTerm}`);
         const data = await res.json();
         setResults(data);
-      } catch(e) {
-        throw e;
+      } catch (e) {
+        console.error(e);
       }
     }
     if (username) {
       fetchData();
     }
   }, [username]);
-    // TODO: Integrate API call to fetch pet minders by searchTerm
-    // setResults(fetchedResults);
-
-    // For now, just a placeholder
-    /*setResults([
-      { id: 11, name: 'John Doe', location: 'City Center' },
-      { id: 2, name: 'Jane Smith', location: 'North Side' },
-    ]);*/
 
   return (
-    <div>
+    <div className="app-container">
       <Navbar />
-      <h2>Find a Pet Minder</h2>
-      <input
-        type="text"
-        placeholder="Search by name, location..."
-        value={searchTerm}
-        onChange={(e) => setSearchTerm(e.target.value)}
-      />
-      <Link to={`/search/${searchTerm}`}>Search</Link>
+      <div className="scrollable-content profile-page">
 
-      <div style={{ marginTop: '1rem' }}>
-        {results.length > 0 ? (
-          results.map((minder) => (
-            <div key={minder.id} style={{ border: '1px solid #ccc', margin: '1rem 0', padding: '1rem' }}>
-              <p><strong>Name:</strong> {minder.username}</p>
-              <p><strong>Location:</strong> {minder.location}</p>
-              {/* Possibly link to a detail page or booking page */}
-              <Link to={`/book/${minder.id}`} style={{ marginRight: '1rem' }}>Book</Link>
-              <Link to={`/message/${minder.id}`} style={{ marginRight: '1rem' }}>Message</Link>
-              <Link to={`/report/${minder.id}`} style={{marginRight: '1rem' }}>Report</Link>
-            </div>
-          ))
-        ) : (
-          <p>No results yet. Try searching for a pet minder above.</p>
-        )}
+        <h2 className="section-title" style={{ alignSelf: 'flex-start' }}>
+          Find a Pet Minder
+        </h2>
+
+        <input
+          type="text"
+          placeholder="Search by name, location..."
+          value={searchTerm}
+          onChange={(e) => setSearchTerm(e.target.value)}
+          className="search-input"
+          style={{
+            width: '100%',
+            padding: '10px',
+            marginBottom: '10px',
+            borderRadius: '10px',
+            border: '1px solid #ccc',
+            fontSize: '14px',
+            fontFamily: 'Rowdies, sans-serif'
+          }}
+        />
+
+        <Link
+          to={`/search/${searchTerm}`}
+          className="search-button"
+          style={{ marginBottom: '20px' }}
+        >
+          Go
+        </Link>
+
+        <div className="reviews-section">
+          {results.length > 0 ? (
+            results.map((minder) => (
+              <div key={minder.id} className="review-card">
+                <p className="reviewer-name">Name: {minder.username}</p>
+                <p className="location">Location: {minder.location}</p>
+                <div style={{ marginTop: '8px' }}>
+                  <Link to={`/book/${minder.id}`} className="edit-button" style={{ marginRight: '10px' }}>
+                    Book
+                  </Link>
+                  <Link to={`/message/${minder.id}`} className="edit-button" style={{ marginRight: '10px' }}>
+                    Message
+                  </Link>
+                  <Link to={`/report/${minder.id}`} className="logout-button">
+                    Report
+                  </Link>
+                </div>
+              </div>
+            ))
+          ) : (
+            <p className="review-text">No results yet. Try searching for a pet minder above.</p>
+          )}
+        </div>
+
+        <div className="nav-spacer" />
       </div>
     </div>
   );
