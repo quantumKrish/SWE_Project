@@ -34,12 +34,10 @@ function Message() {
         const res = await fetch(`http://localhost:4000/message/${senderID}/${receiverID}`);
         if (!res.ok) throw new Error("Failed to fetch sent messages");
         const data = await res.json();
-        console.log(data);
         setSendData(data);
         const otherRes = await fetch(`http://localhost:4000/message/${receiverID}/${senderID}`);
         if (!otherRes.ok) throw new Error("Failed to fetch received messages");
         const data_2 = await otherRes.json();
-        console.log(data_2);
         setReceiveData(data_2);
       } catch (err) {
         throw err;
@@ -92,12 +90,10 @@ function Message() {
         },
         body: JSON.stringify({message}),
       });
-      console.log("Success: ", success);
     }
     setMessage("");
   }
 
-  console.log("Sorted:" ,sorted_logs);
 
   return (
     <div>

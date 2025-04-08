@@ -67,7 +67,6 @@ function Home() {
       try {
         const res = await fetch(`http://localhost:4000/reviews/user/${user.id}`);
         const data = await res.json();
-        console.log("✅ Fetched user reviews:", data);
         setUserReviews(data);
       } catch (error) {
         console.error("Error fetching user reviews:", error);
