@@ -65,4 +65,9 @@ exports.addPet = async (req, res) => {
     }
 }
 
+exports.deletePet = async (req, res) => {
+  await userModel.deletePet(req.params.petID);
+  res.status(200).json({ message: "Pet deleted successfully" });
+}
+
 // Add new methods to userController here when added to the userModel

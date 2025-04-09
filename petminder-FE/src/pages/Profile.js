@@ -26,11 +26,32 @@ function Profile() {
     navigate('/add-pet');
   }
 
+  async function deletePet(petID) {
+    console.log("Deleting pet with ID:", petID);
+    try {
+      const response = await fetch(`http://localhost:4000/users/${petID}`, {
+        method: 'DELETE',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${user.token}`,
+        },
+      });
+
+      user.roleDetails.pets = user.roleDetails.pets.filter(pet => pet.petID !== petID);
+      localStorage.setItem('user', JSON.stringify(user));
+
+    } catch (error) {
+      console.error('Error deleting pet:', error);
+    }
+    navigate('/profile');
+  }
+  
+
   return (
   <div class="fade-in">
     <div class="app-container">
       <div class="scrollable-content">
-        <main class="profile-page">
+        <div class="profile-page">
 
           <section class="profile-header">
             {/* <img src="https://via.placeholder.com/100" alt="Profile picture" class="profile-picture" /> */}
@@ -72,19 +93,22 @@ function Profile() {
             <h3 className="section-title">Pets</h3>
             <div id="reviewsContainer" aria-live="polite">
               {user.roleDetails.pets.map((pet) => (
+                <>
                 <div key={pet.petID} className="review-card">
                   <p><strong>Name: </strong>  {pet.name} </p>
                   <p><strong>Breed: </strong> {pet.breed}</p>
                   <p><strong>Age: </strong> {pet.age}</p>
                   <p><strong>Notes: </strong> {pet.description}</p>
                 </div>
+                <button className="delete-pet-button" onClick={() => deletePet(pet.petID)}>Delete</button>
+                </>
               ))}
             </div>
             <button className="add-pet-button" onClick={handleAddPet}>Add Pet</button>
           </section>
           )}
           <div class="nav-spacer"></div>
-        </main>
+        </div>
       </div>
     </div>
     <Navbar />

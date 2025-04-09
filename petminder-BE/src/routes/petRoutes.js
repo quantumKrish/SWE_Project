@@ -15,5 +15,6 @@ router.get('/owner/:ownerID', async (req, res) => {
 });
 
 router.get('/user/:userID', petController.getPetsByUserId);
+router.delete('/pet/:petID', petController.deletePet);
 
 module.exports = router;

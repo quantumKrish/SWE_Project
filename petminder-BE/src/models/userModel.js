@@ -59,7 +59,7 @@ const userModel = {
             const [rows] = await db.query('SELECT * FROM petMinder WHERE id = ?', [user.id]);
             user.roleDetails = rows[0];
 
-            const [reviews] = await db.query('SELECT * FROM reviews WHERE reviewedUserID = ?', [user.id]);
+            const [reviews] = await db.query('SELECT * FROM reviews WHERE reviewedUserID = ?', [user.roleDetails.minderID]);
             user.roleDetails.reviews = reviews;
         }
         return user;
@@ -91,6 +91,10 @@ const userModel = {
         await db.query('INSERT INTO pet SET ?', [petData]);
         const [rows] = await db.query('SELECT * FROM pet WHERE ownerID = ?', [userId]);
         return rows;
+    },
+
+    deletePet: async (petID) => {
+        await db.query('DELETE FROM pet WHERE petID = ?', [petID]);
     },
 
     // Add new methods to userModel here

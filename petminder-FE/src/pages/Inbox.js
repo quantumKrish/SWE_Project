@@ -29,6 +29,7 @@ function Inbox() {
   if (loading) return <h1>Loading...</h1>;
 
   return (
+    <div className="inbox-page">
     <div className="message-page-container">
       <Navbar />
       <h1>Inbox</h1>
@@ -45,6 +46,7 @@ function Inbox() {
           )
         }
       </div>
+    </div>
     </div>
   );
 }

@@ -105,12 +105,12 @@ function Home() {
 
   return (
     <div className="home-container">
-      <h1>Welcome {username} to PetMinder</h1>
       <Navbar />
 
       {/* Owner View */}
       {userRole === "owner" && (
         <div className="owner-bookings">
+          <h1>Welcome {username} to PetMinder</h1>
           <h2>Your Bookings</h2>
           {bookings.length === 0 ? (
             <p>No bookings found.</p>
@@ -198,6 +198,7 @@ function Home() {
       {/* Minder View */}
       {userRole === "minder" && (
         <div className="minder-bookings">
+          <h1>Welcome {username} to PetMinder</h1>
           <h2>Assigned Bookings</h2>
           {bookings.length === 0 ? (
             <p>No bookings assigned.</p>

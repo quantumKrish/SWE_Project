@@ -15,7 +15,7 @@ function LandingPage() {
     };
 
     return (
-    <main id="landing-container" className={isFading ? "fade-out" : ""}>
+    <div id="landing-container" className={isFading ? "fade-out" : ""}>
       <header class="brand-container">
         <img
           src="https://cdn.builder.io/api/v1/image/assets/82d483615798456e8eba6eee5f39bef1/ca48325ce9badd3c8a8a395ed4e995ededa6d048?placeholderIfAbsent=true"
@@ -34,7 +34,7 @@ function LandingPage() {
           <i class="ti ti-arrow-right arrow-icon"></i>
         </button>
       </div>
-    </main>
+    </div>
     );
 }
 

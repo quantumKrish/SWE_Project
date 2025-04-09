@@ -31,7 +31,7 @@
   }
   
   /* Button Styles */
-  button {
+  .track-button .start-session-btn .end-session-btn {
     background-color: #ed6b30;
     color: white;
     padding: 10px 16px;
