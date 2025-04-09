@@ -29,6 +29,11 @@ const userModel = {
         return userModel.findById(id);
     },
 
+    updatePassword: async (id, password) => {
+        const [rows] = await db.query('UPDATE users SET password = ? WHERE id = ?', [password, id]);
+        return rows[0];
+    },
+
 
     findByUsername: async (name) => {
       const [rows] = await db.query('SELECT * FROM users WHERE username = ?', [name]);
@@ -68,6 +73,10 @@ const userModel = {
     createUser: async (username, email, password, role) => {
         const [rows] = await db.query('INSERT INTO users (username, email, password, role) VALUES (?, ?, ?, ?)', [username, email, password, role]);
         return rows.insertId;
+    },
+
+    deleteUser: async (id) => {
+        await db.query('DELETE FROM users WHERE id = ?', [id]);
     },
 
     createOwnerRow: async (userId) => {
