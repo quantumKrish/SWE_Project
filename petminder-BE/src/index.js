@@ -13,6 +13,7 @@ const getMessageRoute = require("./routes/messageRoutes");
 const bookingRoutes = require("./routes/bookingRoutes");
 const reviewRoutes = require("./routes/reviewRoutes");
 const reportRoutes = require("./routes/reportRoutes");
+const petRoutes = require("./routes/petRoutes");
 
 const app = express();
 const expressPort = process.env.PORT || 4000;
@@ -35,6 +36,7 @@ app.use("/message/", getMessageRoute);
 app.use("/bookings", bookingRoutes);
 app.use("/reviews", reviewRoutes);
 app.use("/report/", reportRoutes);
+app.use("/pets", petRoutes);
 
 app.get("/api/user/me", (req, res) => {
   if (!req.user) {

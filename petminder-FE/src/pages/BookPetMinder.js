@@ -67,7 +67,7 @@ function BookPetMinder() {
   };
 
   return (
-    <>
+    <div className="home-container">
       <Navbar />
       <div className="booking-container">
         <h2>You're booking a session with minder ID: {id}</h2>
@@ -153,7 +153,7 @@ function BookPetMinder() {
           <button type="submit" className="submit-btn">Book Now</button>
         </form>
       </div>
-    </>
+    </div>
   );
 }
 

@@ -178,8 +178,8 @@ const MinderTracking = ({ userId, bookingID, duration }) => {
                   <li>You must complete all checklist items before ending the session.</li>
                 </ul>
                 <div className="modal-actions">
-                  <button onClick={() => { setShowTerms(false); setSessionActive(true); }}>✅ I Accept</button>
-                  <button onClick={() => setShowTerms(false)} style={{ marginLeft: "10px" }}>❌ Decline</button>
+                  <button className="track-button" onClick={() => { setShowTerms(false); setSessionActive(true); }}>✅ I Accept</button>
+                  <button className="track-button" onClick={() => setShowTerms(false)} style={{ marginLeft: "10px" }}>❌ Decline</button>
                 </div>
               </div>
             </div>

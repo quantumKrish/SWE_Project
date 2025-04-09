@@ -54,6 +54,17 @@ exports.getUserById = async (req, res) => {
     }
 }
 
+exports.getMinder = async (req, res) => {
+  try {
+    const userId = req.params.id;
+    let user = await userModel.findById(userId);
+    user = await userModel.getUserByEmail(user.email);
+    res.status(200).json(user);
+    } catch (error) {
+    res.status(500).json({ message: error.message });
+    }
+}
+
 exports.addPet = async (req, res) => {
   try {
     const userId = req.user.id;
@@ -63,6 +74,11 @@ exports.addPet = async (req, res) => {
     } catch (error) {
     res.status(500).json({ message: error.message });
     }
+}
+
+exports.deletePet = async (req, res) => {
+  await userModel.deletePet(req.params.petID);
+  res.status(200).json({ message: "Pet deleted successfully" });
 }
 
 // Add new methods to userController here when added to the userModel

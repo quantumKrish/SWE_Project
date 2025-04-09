@@ -117,8 +117,8 @@ function AddPet() {
           </label> */}
 
           <div class="form-actions">
-            <button type="button" class="cancel-button" onClick={goBack}>Cancel</button>
-            <button type="submit" class="submit-button">Add Pet</button>
+            <button type="button" id="cancel-button" onClick={goBack}>Cancel</button>
+            <button type="submit" id="submit-button">Add Pet</button>
           </div>
         </form>
       </div>

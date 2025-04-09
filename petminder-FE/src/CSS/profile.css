@@ -305,4 +305,16 @@
   .logout-button:active {
     transform: scale(0.95);
   }
+
+  .delete-pet-button{
+    background-color: #e63946;
+    color: #fff;
+    border: none;
+    padding: 8px 20px;
+    font-family: "Rowdies", sans-serif;
+    font-size: 14px;
+    border-radius: 9999px;
+    cursor: pointer;
+  }
+
   

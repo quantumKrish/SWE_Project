@@ -21,6 +21,7 @@ import Message from './pages/Message';
 import Inbox from './pages/Inbox';
 import ReviewBooking from "./pages/ReviewBooking";
 import ReportMinder from "./pages/ReportMinder";
+import MinderProfile from "./pages/MinderProfile";
 
 
 import { UserProvider } from './pages/UserContext';
@@ -51,6 +52,7 @@ function App() {
           <Route path="/book/:id" element={<BookPetMinder />} />
           <Route path="/review/:bookingId" element={<ReviewBooking />} />
           <Route path="/report/:userid" element={<ReportMinder />} />
+          <Route path="/minder/:id" element={<MinderProfile />} />
         </Routes>
       </Router>
     </UserProvider>

@@ -5,7 +5,7 @@
     padding: 0;
   }
   
-  body {
+  .home-container {
     font-family: "Rowdies", -apple-system, Roboto, Helvetica, sans-serif;
     background-color: #f5f5f5;
     min-height: 100vh;
