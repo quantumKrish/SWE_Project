@@ -54,6 +54,17 @@ exports.getUserById = async (req, res) => {
     }
 }
 
+exports.getMinder = async (req, res) => {
+  try {
+    const userId = req.params.id;
+    let user = await userModel.findById(userId);
+    user = await userModel.getUserByEmail(user.email);
+    res.status(200).json(user);
+    } catch (error) {
+    res.status(500).json({ message: error.message });
+    }
+}
+
 exports.addPet = async (req, res) => {
   try {
     const userId = req.user.id;

@@ -14,6 +14,7 @@ router.delete('/:petID', userController.deletePet);
 
 // Public routes
 router.get('/minders', userController.getAllMinders);
+router.get('/minder/:id', userController.getMinder);
 
 
 router.get('/petowner/user/:userID', userController.getOwnerIdByUserId);

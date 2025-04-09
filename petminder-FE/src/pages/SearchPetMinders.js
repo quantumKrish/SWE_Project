@@ -60,8 +60,8 @@ function SearchPetMinders() {
           {results.length > 0 ? (
             results.map((minder) => (
               <div key={minder.id} className="review-card">
-                <p className="reviewer-name">Name: {minder.username}</p>
-                <p className="location">Location: {minder.location}</p>
+                <p className="reviewer-name">Name: <Link to={`/minder/${minder.id}`}>{minder.username}</Link></p>
+                <p className="location">Location: {minder.address}</p>
                 <div style={{ marginTop: '8px' }}>
                   <Link to={`/book/${minder.id}`} className="edit-button" style={{ marginRight: '10px' }}>
                     Book
