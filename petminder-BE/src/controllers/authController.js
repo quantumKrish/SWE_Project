@@ -63,7 +63,7 @@ exports.resetPassword = async (req, res) => {
         }
 
         const hashedPassword = await bcrypt.hash(password, 12);
-        await userModel.updateUser(user.id, { password: hashedPassword });
+        await userModel.updatePassword(user.id, hashedPassword);
 
         res.status(200).json({ message: "Password updated successfully" });
     }
@@ -72,3 +72,4 @@ exports.resetPassword = async (req, res) => {
         res.status(500).json({ message: "Internal server error" });
     }
 }
+

@@ -12,6 +12,7 @@ function EditProfile() {
     const [availability, setAvailability] = useState(user.roleDetails?.availability || '');
     const [bio, setBio] = useState(user.roleDetails?.description || '');
     const navigate = useNavigate();
+    localStorage.setItem('email', user.email);
 
     const handleUpdateProfile = async (e) => {
         e.preventDefault();
@@ -54,19 +55,39 @@ function EditProfile() {
         navigate('/profile');
     }
 
+    const deleteAccount = async () => {
+      if (!window.confirm("Are you sure you want to delete your account? This action cannot be undone.")) {
+        return;
+      }
+        try {
+            const response = await fetch(`http://localhost:4000/users/me`, {
+                method: 'DELETE',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${user.token}`,
+                },
+            });
+
+            if (!response.ok) {
+                throw new Error('Failed to delete account');
+            }
+
+            localStorage.removeItem('user');
+            navigate('/login');
+        } catch (error) {
+            console.error('Error deleting account:', error);
+        }
+    }
+
     return (
     <div class="app-container">
         <h1 class="page-title">Edit Profile</h1>
+        <div class="form-group center">
+            <Link to="/set-new-password" >Reset Password</Link>
+            <button class="delete-account-button" onClick={deleteAccount}>Delete Account</button>
+        </div>
         
         <form class="form-section" onSubmit={handleUpdateProfile}>
-          <div class="form-group center">
-            <label for="profilePicture">
-              <img src="https://via.placeholder.com/100" alt="Current profile picture" class="profile-picture-preview" />
-            </label>
-            <input type="file" id="profilePicture" class="hidden" accept="image/*" />
-            <p class="profile-picture-note">Tap image to change</p>
-          </div>
-
           <div class="form-group">
             <label>Full Name</label>
             <input type="text" value={name} onChange={(e) => setName(e.target.value)} />

@@ -81,4 +81,16 @@ exports.deletePet = async (req, res) => {
   res.status(200).json({ message: "Pet deleted successfully" });
 }
 
+exports.deleteUser = async (req, res) => {
+  try {
+      const userId = req.user.id;
+      await userModel.deleteUser(userId);
+      res.status(200).json({ message: "User deleted successfully" });
+  }
+  catch (error) {
+      console.log(error);
+      res.status(500).json({ message: "Internal server error" });
+  }
+}
+
 // Add new methods to userController here when added to the userModel
