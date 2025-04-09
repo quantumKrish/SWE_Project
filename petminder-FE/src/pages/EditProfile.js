@@ -59,13 +59,6 @@ function EditProfile() {
         <h1 class="page-title">Edit Profile</h1>
         
         <form class="form-section" onSubmit={handleUpdateProfile}>
-          <div class="form-group center">
-            <label for="profilePicture">
-              <img src="https://via.placeholder.com/100" alt="Current profile picture" class="profile-picture-preview" />
-            </label>
-            <input type="file" id="profilePicture" class="hidden" accept="image/*" />
-            <p class="profile-picture-note">Tap image to change</p>
-          </div>
 
           <div class="form-group">
             <label>Full Name</label>
