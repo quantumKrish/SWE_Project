@@ -159,7 +159,9 @@ const MinderTracking = ({ userId, bookingID, duration }) => {
       {!sessionActive ? (
         <>
           <button className="start-session-btn" onClick={() => setShowTerms(true)}>Start Session</button>
-
+        <div>      <button onClick={() => navigate("/home")} className="back-to-home-btn">
+        🔙 Back to Home
+      </button></div>
           {showTerms && (
             <div className="modal">
               <div className="modal-content">

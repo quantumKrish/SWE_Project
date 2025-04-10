@@ -94,13 +94,14 @@ function Profile() {
             <div id="reviewsContainer" aria-live="polite">
               {user.roleDetails.pets.map((pet) => (
                 <>
+                                <button className="delete-pet-button" onClick={() => deletePet(pet.petID)}>Delete</button>
+
                 <div key={pet.petID} className="review-card">
                   <p><strong>Name: </strong>  {pet.name} </p>
                   <p><strong>Breed: </strong> {pet.breed}</p>
                   <p><strong>Age: </strong> {pet.age}</p>
                   <p><strong>Notes: </strong> {pet.description}</p>
                 </div>
-                <button className="delete-pet-button" onClick={() => deletePet(pet.petID)}>Delete</button>
                 </>
               ))}
             </div>

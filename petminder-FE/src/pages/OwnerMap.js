@@ -78,7 +78,7 @@ const OwnerMap = ({ minderId }) => {
         <MapContainer
           center={[location.latitude, location.longitude]}
           zoom={16}
-          style={{ height: "400px", width: "900px" }}
+          style={{ height: "400px", width: "100%" }}
         >
           <ChangeMapView coords={location} />
           <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />

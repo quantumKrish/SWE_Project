@@ -1,113 +1,131 @@
-/* minderTracking.css */
+/* Root Container */
+.minder-tracking {
+  max-width: 900px;
+  margin: 2rem auto;
+  padding: 2rem;
+  background-color: #fff;
+  border-radius: 16px;
+  box-shadow: 0 0 16px rgba(0, 0, 0, 0.1);
+  font-family: 'Segoe UI', sans-serif;
+  color: #333;
+}
 
-/* Modal Overlay */
-.modal {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100vw;
-    height: 100vh;
-    background-color: rgba(0, 0, 0, 0.6);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    z-index: 1000;
-  }
-  
-  /* Modal Content */
-  .modal-content {
-    background-color: white;
-    padding: 2rem;
-    border-radius: 8px;
-    max-width: 500px;
-    text-align: left;
-  }
-  
-  /* Header Styles */
-  h2 {
-    font-size: 2rem;
-    margin-bottom: 1rem;
-    text-align: center;
-  }
-  
-  /* Button Styles */
-  .track-button .start-session-btn .end-session-btn {
-    background-color: #ed6b30;
-    color: white;
-    padding: 10px 16px;
-    border: none;
-    border-radius: 9999px;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    font-size: 14px;
-    font-family: 'Rowdies', sans-serif;
-    margin-top: 1em;
-    display: inline-block;
-  }
-  
-  button:hover {
-    background-color: #e05a20;
-    transform: scale(1.05);
-  }
-  
-  /* Checklist Section */
-  ul {
-    list-style-type: none;
-    padding: 0;
-  }
-  
-  ul li {
-    margin: 0.5em 0;
-    font-size: 16px;
-  }
-  
-  ul li input {
-    margin-right: 10px;
-  }
-  
-  /* Session Status */
-  .session-status {
-    font-size: 1.2rem;
-    margin-top: 1rem;
-    font-weight: bold;
-  }
-  
-  .session-time {
-    font-size: 1.2rem;
-    margin-top: 0.5rem;
-  }
-  
-  /* Location Data */
-  .location-data {
-    font-size: 1rem;
-    margin-top: 1rem;
-    color: #4caf50;
-  }
-  
-  /* Terms and Conditions */
-  .terms-list {
-    margin-top: 1em;
-  }
-  
-  .terms-list ul {
-    padding-left: 20px;
-  }
-  
-  .terms-list li {
-    font-size: 16px;
-  }
-  
-  .terms-actions {
-    margin-top: 1em;
-  }
-  
-  .terms-actions button {
-    margin-left: 10px;
-  }
-  
-  /* Disabled Button */
-  button:disabled {
-    background-color: #b0b0b0;
-    cursor: not-allowed;
-  }
-  
+/* Header */
+.minder-tracking h2 {
+  font-size: 2.2rem;
+  text-align: center;
+  margin-bottom: 1.5rem;
+  color: #ed6b30;
+}
+
+/* Buttons */
+.minder-tracking .start-session-btn,
+.minder-tracking .end-session-btn,
+.minder-tracking .track-button {
+  background-color: #ed6b30;
+  color: white;
+  padding: 12px 20px;
+  border: none;
+  border-radius: 30px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-size: 1rem;
+  font-weight: 600;
+  margin-top: 1.5rem;
+}
+
+.minder-tracking button:hover {
+  background-color: #d9591c;
+  transform: scale(1.05);
+}
+
+/* Modal */
+.minder-tracking .modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.minder-tracking .modal-content {
+  background-color: white;
+  padding: 2rem;
+  border-radius: 12px;
+  max-width: 600px;
+  width: 90%;
+  text-align: left;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+}
+
+.minder-tracking .modal-content h3 {
+  font-size: 1.5rem;
+  color: #e05a20;
+  margin-bottom: 1rem;
+}
+
+/* Terms List */
+.minder-tracking .modal-content ul {
+  list-style-type: disc;
+  padding-left: 20px;
+  margin-bottom: 1rem;
+}
+
+.minder-tracking .modal-content ul ul {
+  list-style-type: circle;
+  margin-top: 0.3rem;
+}
+
+/* Modal Actions */
+.minder-tracking .modal-actions {
+  margin-top: 1.5rem;
+}
+
+/* Session Info */
+.minder-tracking p {
+  font-size: 1.1rem;
+  margin: 0.75rem 0;
+}
+
+.minder-tracking .location-data {
+  color: #4caf50;
+  font-weight: bold;
+}
+
+/* Checklist */
+.minder-tracking h3 {
+  margin-top: 2rem;
+  font-size: 1.4rem;
+  color: #ed6b30;
+}
+
+.minder-tracking ul {
+  list-style-type: none;
+  padding: 0;
+  margin-top: 1rem;
+}
+
+.minder-tracking ul li {
+  display: flex;
+  align-items: center;
+  margin-bottom: 0.8rem;
+  font-size: 1rem;
+}
+
+.minder-tracking ul li input[type="checkbox"] {
+  margin-right: 10px;
+  width: 18px;
+  height: 18px;
+  accent-color: #ed6b30;
+}
+
+/* Disabled Button */
+.minder-tracking button:disabled {
+  background-color: #b0b0b0;
+  cursor: not-allowed;
+}
